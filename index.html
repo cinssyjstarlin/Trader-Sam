@@ -1,0 +1,1652 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trader Sam Seafood — From Indonesia's Waters to Global Markets</title>
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy: #1B2F6E;
+    --ocean: #378ADD;
+    --deep: #042C53;
+    --white: #FFFFFF;
+    --light-blue: #E6F1FB;
+    --text-dark: #1A1A2E;
+    --text-muted: #6B7A99;
+    --whatsapp: #25D366;
+    --transition: 0.3s ease;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    color: var(--text-dark);
+    background: var(--white);
+    overflow-x: hidden;
+  }
+
+  /* ─── UTILITY ─── */
+  .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+  .section { padding: 48px 0; }
+  .section-eyebrow {
+    font-size: 12px; font-weight: 700; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--ocean); margin-bottom: 12px;
+  }
+  .section-title {
+    font-size: clamp(28px, 4vw, 44px); font-weight: 800;
+    color: var(--navy); line-height: 1.15; margin-bottom: 16px;
+  }
+  .section-title-white { color: var(--white); }
+  .section-sub {
+    font-size: 17px; color: var(--text-muted); max-width: 560px; line-height: 1.7;
+  }
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 14px 28px; border-radius: 8px; font-size: 15px; font-weight: 600;
+    cursor: pointer; border: 2px solid transparent; transition: var(--transition);
+    text-decoration: none; white-space: nowrap; min-height: 44px;
+  }
+  .btn-primary { background: var(--ocean); color: var(--white); border-color: var(--ocean); }
+  .btn-primary:hover { background: #2a6db5; border-color: #2a6db5; }
+  .btn-outline { background: transparent; color: var(--white); border-color: var(--white); }
+  .btn-outline:hover { background: rgba(255,255,255,0.1); }
+  .btn-navy { background: var(--navy); color: var(--white); border-color: var(--navy); }
+  .btn-navy:hover { background: #142459; }
+  .btn-whatsapp { background: var(--whatsapp); color: var(--white); border-color: var(--whatsapp); font-size: 16px; }
+  .btn-whatsapp:hover { background: #1da851; }
+
+  /* ─── REVEAL ─── */
+  .reveal {
+    opacity: 0; transform: translateY(40px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* ─── NAVBAR ─── */
+  #navbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+    background: var(--white); box-shadow: 0 2px 20px rgba(0,0,0,0.08);
+    padding: 10px 0;
+  }
+  .nav-inner {
+    display: flex; align-items: center; justify-content: space-between; gap: 24px;
+  }
+  .nav-logo {
+    display: flex; align-items: center;
+    text-decoration: none; flex-shrink: 0;
+  }
+  .nav-logo img {
+    height: 52px; width: auto; display: block;
+  }
+  .nav-links {
+    display: flex; align-items: center; gap: 32px; list-style: none;
+  }
+  .nav-links a {
+    font-size: 14px; font-weight: 600; color: var(--text-dark);
+    text-decoration: none; transition: color 0.3s; white-space: nowrap;
+  }
+  .nav-links a:hover { color: var(--ocean); }
+  .nav-cta .btn { padding: 10px 20px; font-size: 14px; }
+  .nav-cta .btn { background: var(--navy); border-color: var(--navy); color: var(--white); }
+
+  /* NAV DROPDOWN */
+  .nav-dropdown { position: relative; }
+  .nav-dropdown > a::after { content: ' ▾'; font-size: 10px; opacity: 0.6; }
+  .nav-dropdown-menu {
+    position: absolute; top: calc(100% + 12px); left: 50%; transform: translateX(-50%) translateY(6px);
+    min-width: 210px; background: var(--white); border-radius: 10px;
+    box-shadow: 0 8px 32px rgba(27,47,110,0.14); padding: 6px 0;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.18s ease, transform 0.18s ease; z-index: 200;
+  }
+  .nav-dropdown.open .nav-dropdown-menu,
+  .nav-dropdown:hover .nav-dropdown-menu {
+    opacity: 1; pointer-events: auto; transform: translateX(-50%) translateY(0);
+  }
+  /* Bridge pseudo-element fills gap between trigger and menu so cursor can travel through */
+  .nav-dropdown > a::before {
+    content: ''; position: absolute; top: 100%; left: -20px; right: -20px;
+    height: 16px; background: transparent;
+  }
+  .nav-dropdown-menu:hover { opacity: 1; pointer-events: auto; transform: translateX(-50%) translateY(0); }
+  .nav-dropdown-menu a {
+    display: block; padding: 10px 20px; font-size: 14px; font-weight: 500;
+    color: var(--text-dark); text-decoration: none; border-bottom: none;
+    transition: background 0.15s, color 0.15s;
+  }
+  .nav-dropdown-menu a:hover { background: var(--light-blue); color: var(--ocean); }
+  .nav-dropdown-menu .dropdown-divider {
+    height: 1px; background: #eee; margin: 4px 16px;
+  }
+  .hamburger {
+    display: none; flex-direction: column; gap: 5px;
+    background: none; border: none; cursor: pointer; padding: 8px; min-height: 44px; min-width: 44px;
+    align-items: center; justify-content: center;
+  }
+  .hamburger span {
+    display: block; width: 24px; height: 2px; background: var(--navy);
+    transition: var(--transition); border-radius: 2px;
+  }
+  .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .hamburger.open span:nth-child(2) { opacity: 0; }
+  .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+  .mobile-menu {
+    display: none; position: fixed; top: 76px; left: 0; right: 0;
+    background: var(--white); box-shadow: 0 4px 20px rgba(0,0,0,0.12);
+    padding: 24px; z-index: 999;
+  }
+  .mobile-menu.open { display: block; }
+  .mobile-menu a {
+    display: block; padding: 14px 0; font-size: 16px; font-weight: 600;
+    color: var(--text-dark); text-decoration: none; border-bottom: 1px solid #eee;
+  }
+  .mobile-menu a:last-child { border-bottom: none; }
+  .mobile-menu .btn { margin-top: 16px; width: 100%; justify-content: center; }
+
+  /* ─── HERO ─── */
+  #hero {
+    min-height: 100vh;
+    background: var(--deep);
+    display: flex; flex-direction: column; justify-content: center;
+    position: relative; overflow: hidden;
+    padding: 100px 0 60px;
+  }
+  .hero-bg-image {
+    position: absolute; inset: 0; z-index: 0;
+    background-image: url('https://res.cloudinary.com/dytehjyns/image/upload/v1782803512/IMG_2089_gnz6ow.png');
+    background-size: cover; background-position: center 40%;
+    background-repeat: no-repeat;
+  }
+  .hero-bg-image::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(
+      160deg,
+      rgba(4,44,83,0.92) 0%,
+      rgba(4,44,83,0.72) 55%,
+      rgba(27,47,110,0.65) 100%
+    );
+  }
+  .hero-bg-pattern {
+    position: absolute; inset: 0; z-index: 1; opacity: 0.12;
+    background-image: radial-gradient(circle at 20% 50%, #378ADD 0%, transparent 50%),
+      radial-gradient(circle at 80% 20%, #1B2F6E 0%, transparent 50%);
+  }
+  .hero-inner {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center;
+    position: relative; z-index: 3;
+  }
+  .hero-eyebrow {
+    font-size: 12px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase;
+    color: #5aabff; margin-bottom: 20px; text-shadow: 0 1px 8px rgba(0,0,0,0.3);
+  }
+  .hero-h1 {
+    font-size: clamp(36px, 5.5vw, 64px); font-weight: 900; color: var(--white);
+    line-height: 1.06; margin-bottom: 20px; letter-spacing: -0.5px;
+  }
+  .hero-sub {
+    font-size: 17px; color: rgba(255,255,255,0.72); line-height: 1.75;
+    margin-bottom: 36px; max-width: 460px;
+  }
+  .hero-ctas { display: flex; gap: 16px; flex-wrap: wrap; }
+  .hero-stats { display: flex; flex-direction: column; gap: 12px; }
+  .stat-card {
+    background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.14);
+    border-radius: 12px; padding: 18px 24px; backdrop-filter: blur(12px);
+  }
+  .stat-number {
+    font-size: 42px; font-weight: 900; color: var(--white); line-height: 1;
+    font-variant-numeric: tabular-nums;
+  }
+  .stat-label { font-size: 15px; color: rgba(255,255,255,0.65); margin-top: 6px; font-weight: 500; }
+  .hero-wave {
+    position: absolute; bottom: -2px; left: 0; right: 0; z-index: 3; line-height: 0; font-size: 0;
+  }
+  .hero-wave svg { display: block; }
+
+  /* ─── PRODUCTS ─── */
+  #products { background: var(--white); }
+  .products-header { margin-bottom: 48px; }
+  .products-scroll-wrapper { position: relative; padding: 0; margin: 0 64px; }
+  .products-scroll { overflow: hidden; width: 100%; }
+  .products-scroll-inner {
+    display: flex; gap: 20px;
+    transition: transform 0.5s cubic-bezier(0.4,0,0.2,1);
+    will-change: transform;
+  }
+
+  /* FLIP CARD */
+  .flip-card {
+    flex-shrink: 0; height: 310px; width: 330px;
+    perspective: 1000px; cursor: pointer;
+  }
+  .flip-inner {
+    position: relative; width: 100%; height: 100%;
+    transform-style: preserve-3d; transition: transform 0.6s cubic-bezier(0.4,0,0.2,1);
+  }
+  .flip-card.flipped .flip-inner { transform: rotateY(180deg); }
+  .flip-front, .flip-back {
+    position: absolute; inset: 0; backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    border-radius: 16px; overflow: hidden;
+  }
+  .flip-front {
+    background: var(--white);
+    display: flex; align-items: center; justify-content: center;
+    border: 1.5px solid #e4ecf5;
+  }
+  .flip-img {
+    width: 100%; height: 100%;
+    object-fit: contain; object-position: center; display: block;
+    padding: 10px;
+  }
+  .flip-front-overlay { display: none; }
+  .flip-name { display: none; }
+  .flip-type { display: none; }
+  .flip-back {
+    background: var(--ocean); color: var(--white);
+    transform: rotateY(180deg);
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 20px; text-align: left;
+  }
+  .flip-back h4 { font-size: 15px; font-weight: 800; margin-bottom: 10px; text-align: center; width: 100%; }
+  .flip-back ul { list-style: none; margin-bottom: 14px; }
+  .flip-back ul { display: none; }
+  .flip-back .btn { padding: 9px 14px; font-size: 12px; width: 100%; justify-content: center; background: var(--white); color: var(--ocean); border-color: var(--white); }
+  .flip-back .btn:hover { background: rgba(255,255,255,0.9); }
+
+  /* VIEW ALL */
+  .view-all-wrap { text-align: center; margin-top: 36px; }
+  .btn-outline-navy { background: transparent; color: var(--navy); border-color: var(--navy); }
+  .btn-outline-navy:hover { background: var(--navy); color: var(--white); }
+
+  /* ─── WHY INDONESIA ─── */
+  #why { background: var(--white); }
+  .why-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+  .why-image {
+    border-radius: 20px; overflow: hidden; height: 560px; background: var(--deep);
+    display: flex; align-items: center; justify-content: center; position: relative;
+  }
+  .why-image-inner { text-align: center; color: rgba(255,255,255,0.3); }
+  .why-checklist { list-style: none; margin-top: 32px; display: flex; flex-direction: column; gap: 16px; }
+  .why-checklist li {
+    display: flex; gap: 16px; align-items: flex-start;
+    font-size: 16px; color: var(--text-dark); line-height: 1.5;
+  }
+  .check-icon {
+    width: 28px; height: 28px; border-radius: 50%; background: var(--light-blue);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--ocean); font-size: 14px; flex-shrink: 0; margin-top: 1px;
+  }
+
+  /* ─── SUPPLY CHAIN ─── */
+  #supply { background: var(--light-blue); }
+  .supply-timeline {
+    display: grid; grid-template-columns: repeat(6, 1fr);
+    gap: 16px; margin-top: 56px;
+  }
+  .supply-step {
+    text-align: center; position: relative;
+    opacity: 0; transform: translateY(30px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .supply-step.visible { opacity: 1; transform: translateY(0); }
+  .supply-step:not(:last-child)::after {
+    content: '→'; position: absolute; top: 56px; right: -14px;
+    color: var(--ocean); font-size: 18px; font-weight: 700; z-index: 2;
+    transform: translateY(-50%);
+  }
+  .step-img {
+    width: 100%; aspect-ratio: 1; border-radius: 14px; overflow: hidden;
+    margin: 0 auto 14px; position: relative; z-index: 1;
+    box-shadow: 0 4px 20px rgba(27,47,110,0.15);
+  }
+  .step-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .step-num {
+    position: absolute; top: 8px; left: 8px;
+    width: 24px; height: 24px; border-radius: 50%;
+    background: var(--ocean); color: var(--white);
+    font-size: 11px; font-weight: 800;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .step-title { font-size: 13px; font-weight: 700; color: var(--navy); margin-top: 10px; }
+
+  /* ─── CAROUSEL ARROWS ─── */
+  .carousel-btn {
+    position: absolute; top: 50%; transform: translateY(-50%);
+    width: 48px; height: 48px; border-radius: 50%; background: var(--white);
+    box-shadow: 0 4px 20px rgba(27,47,110,0.18); border: 2px solid var(--light-blue);
+    cursor: pointer; display: flex; align-items: center; justify-content: center;
+    color: var(--navy); font-size: 22px; z-index: 10; transition: var(--transition);
+  }
+  .carousel-btn:hover { background: var(--navy); color: var(--white); border-color: var(--navy); }
+  .carousel-btn-left { left: -60px; }
+  .carousel-btn-right { right: -60px; }
+  @media (max-width: 768px) { .carousel-btn { display: none; } }
+
+  /* ─── CERTIFICATIONS ─── */
+  #certs { background: var(--white); }
+  .certs-grid {
+    display: flex; gap: 48px; justify-content: center; align-items: center;
+    flex-wrap: wrap; margin-top: 48px;
+  }
+  .cert-card {
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    padding: 16px; transition: var(--transition);
+  }
+  .cert-card:hover { transform: translateY(-4px); }
+  .cert-icon { width: 160px; height: 160px; display: flex; align-items: center; justify-content: center; border-radius: 50%; overflow: hidden; }
+  .cert-icon img { width: 160px; height: 160px; object-fit: cover; display: block; border-radius: 50%; }
+  .cert-name, .cert-desc { display: none; }
+
+  /* ─── SUSTAINABILITY ─── */
+  #sustainability { background: var(--white); }
+  .sust-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+  .sust-image {
+    border-radius: 20px; height: 480px; background: var(--navy);
+    display: flex; align-items: center; justify-content: center; color: rgba(255,255,255,0.25);
+    order: 2;
+  }
+  .sust-content { order: 1; }
+  .sust-list { list-style: none; margin-top: 24px; display: flex; flex-direction: column; gap: 14px; }
+  .sust-list li { display: flex; gap: 12px; font-size: 16px; color: var(--text-dark); line-height: 1.5; }
+  .sust-list li i { color: var(--ocean); font-size: 20px; margin-top: 1px; flex-shrink: 0; }
+
+  /* ─── STATS ─── */
+  #stats { background: var(--deep); }
+  .stats-grid {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 40px;
+    margin-bottom: 48px;
+  }
+  .stat-block { text-align: center; }
+  .stat-big { font-size: clamp(36px, 5vw, 60px); font-weight: 900; color: var(--white); line-height: 1; }
+  .stat-unit { color: var(--ocean); }
+  .stat-desc { font-size: 15px; color: rgba(255,255,255,0.6); margin-top: 8px; font-weight: 500; }
+  .stats-para { text-align: center; font-size: 17px; color: rgba(255,255,255,0.65); max-width: 680px; margin: 0 auto; line-height: 1.75; }
+
+  /* ─── GLOBAL REACH ─── */
+  #reach { background: var(--deep); }
+  .reach-header { text-align: center; margin-bottom: 48px; }
+
+
+  /* ─── GALLERY ─── */
+  #gallery { background: var(--light-blue); }
+  .gallery-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 48px;
+  }
+  .gallery-item {
+    border-radius: 16px; overflow: hidden; height: 260px;
+    background: var(--deep); display: flex; align-items: flex-end;
+    position: relative; transition: transform 0.3s;
+  }
+  .gallery-item:hover { transform: scale(1.02); }
+  .gallery-label {
+    padding: 20px 24px; background: linear-gradient(transparent, rgba(4,44,83,0.85));
+    width: 100%; color: var(--white); font-size: 16px; font-weight: 700;
+  }
+  .gallery-icon { font-size: 48px; position: absolute; top: 50%; left: 50%; transform: translate(-50%,-65%); opacity: 0.15; }
+
+  /* ─── CONTACT ─── */
+  #contact { background: var(--white); }
+  .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; }
+  .contact-form { display: flex; flex-direction: column; gap: 16px; }
+  .form-group { display: flex; flex-direction: column; gap: 6px; }
+  .form-group label { font-size: 14px; font-weight: 600; color: var(--text-dark); }
+  .form-group input, .form-group select {
+    padding: 13px 16px; border: 2px solid #e0e6f0; border-radius: 8px;
+    font-size: 15px; color: var(--text-dark); background: var(--white);
+    transition: border-color 0.2s; min-height: 44px; width: 100%;
+    font-family: inherit;
+  }
+  .form-group input:focus, .form-group select:focus {
+    outline: none; border-color: var(--ocean);
+  }
+  .checkbox-group { display: flex; flex-direction: column; gap: 6px; }
+  .checkbox-group label { font-size: 14px; font-weight: 600; color: var(--text-dark); margin-bottom: 4px; }
+  .checkbox-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .checkbox-item { display: flex; align-items: center; gap: 8px; cursor: pointer; min-height: 44px; }
+  .checkbox-item input { width: 18px; height: 18px; accent-color: var(--ocean); cursor: pointer; }
+  .checkbox-item span { font-size: 14px; color: var(--text-dark); }
+  .form-actions { display: flex; flex-direction: column; gap: 12px; margin-top: 8px; }
+  .form-actions .btn { justify-content: center; }
+  .contact-info { display: flex; flex-direction: column; gap: 32px; }
+  .contact-info-title { font-size: 22px; font-weight: 800; color: var(--navy); margin-bottom: 8px; }
+  .contact-item { display: flex; gap: 16px; align-items: flex-start; }
+  .contact-icon {
+    width: 48px; height: 48px; border-radius: 12px; background: var(--light-blue);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--ocean); font-size: 22px; flex-shrink: 0;
+  }
+  .contact-item-label { font-size: 13px; color: var(--text-muted); margin-bottom: 4px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+  .contact-item-value { font-size: 16px; color: var(--text-dark); font-weight: 600; }
+  .contact-item-value a { color: var(--ocean); text-decoration: none; }
+  .contact-item-value a:hover { text-decoration: underline; }
+
+  /* ─── FOOTER ─── */
+  footer { background: var(--deep); padding: 64px 0 32px; }
+  .footer-top { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 48px; margin-bottom: 48px; }
+  .footer-brand .nav-logo { margin-bottom: 16px; }
+  .footer-tagline { font-size: 14px; color: rgba(255,255,255,0.55); line-height: 1.6; max-width: 260px; }
+  .footer-col h4 { font-size: 13px; font-weight: 700; color: rgba(255,255,255,0.5); letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 16px; }
+  .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .footer-col ul a { font-size: 14px; color: rgba(255,255,255,0.75); text-decoration: none; transition: color 0.2s; }
+  .footer-col ul a:hover { color: var(--white); }
+  .footer-bottom { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 24px; display: flex; justify-content: space-between; align-items: center; flex-wrap: gap; gap: 12px; }
+  .footer-copy { font-size: 13px; color: rgba(255,255,255,0.4); }
+
+  /* ─── WHATSAPP FLOAT ─── */
+  #wa-float {
+    position: fixed; bottom: 28px; right: 28px; z-index: 900;
+    width: 60px; height: 60px; border-radius: 50%; background: var(--whatsapp);
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 4px 24px rgba(37,211,102,0.4); text-decoration: none;
+    transition: transform 0.3s, box-shadow 0.3s; color: var(--white); font-size: 28px;
+  }
+  #wa-float:hover { transform: scale(1.1); box-shadow: 0 6px 32px rgba(37,211,102,0.5); }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 1024px) {
+    .stats-grid { grid-template-columns: repeat(2, 1fr); }
+    .supply-timeline { grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    .supply-step:not(:last-child)::after { display: none; }
+  }
+  @media (max-width: 640px) {
+    .supply-timeline { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  @media (max-width: 768px) {
+    .section { padding: 36px 0; }
+    .nav-links, .nav-cta { display: none; }
+    .hamburger { display: flex; }
+    .hero-inner { grid-template-columns: 1fr; gap: 40px; }
+    .hero-stats { flex-direction: row; overflow-x: auto; gap: 16px; }
+    .stat-card { flex: 0 0 180px; }
+    .stat-number { font-size: 36px; }
+    .why-grid, .sust-grid, .contact-grid { grid-template-columns: 1fr; gap: 40px; }
+    .sust-image { order: -1; height: 280px; }
+    .certs-grid { grid-template-columns: repeat(2, 1fr); }
+    .gallery-grid { grid-template-columns: 1fr; }
+    .footer-top { grid-template-columns: 1fr; gap: 32px; }
+    .footer-bottom { flex-direction: column; text-align: center; }
+    .scroll-btn { display: none; }
+    .why-image { height: 300px; }
+    .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 32px; }
+  }
+
+  /* ─── COMMITMENT GRID ─── */
+  .commitment-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 40px;
+    max-width: 700px; margin: 0 auto;
+  }
+  .commitment-item {
+    display: flex; flex-direction: column; align-items: center;
+    text-align: center; gap: 16px;
+  }
+  .commitment-icon {
+    width: 80px; height: 80px; border-radius: 50%;
+    background: var(--light-blue);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--navy); font-size: 36px;
+  }
+  .commitment-label {
+    font-size: 20px; font-weight: 800; color: var(--navy); line-height: 1.3;
+  }
+
+  @media (max-width: 480px) {
+    .hero-ctas { flex-direction: column; }
+    .hero-ctas .btn { justify-content: center; }
+    .certs-grid { grid-template-columns: 1fr; }
+    .checkbox-grid { grid-template-columns: 1fr; }
+    .commitment-grid { grid-template-columns: 1fr; }
+  }
+
+  /* ─── NEWS ─── */
+  #news { background: var(--white); }
+  .news-section-header {
+    display: flex; align-items: flex-end; justify-content: space-between;
+    margin-bottom: 40px; gap: 16px;
+  }
+  .news-all-link {
+    font-size: 14px; font-weight: 700; color: var(--ocean);
+    text-decoration: none; white-space: nowrap; flex-shrink: 0;
+    transition: color 0.2s;
+  }
+  .news-all-link:hover { color: var(--navy); }
+  .news-featured-row {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 20px;
+  }
+  .news-card {
+    background: var(--white); border: 1.5px solid #e2e8f0; border-radius: 16px;
+    overflow: hidden; text-decoration: none; display: flex; flex-direction: column;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .news-card:hover { border-color: var(--navy); transform: translateY(-3px); }
+  .news-card-img {
+    height: 180px; position: relative; overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+    background: var(--deep);
+  }
+  .news-card-img-cover {
+    position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
+  }
+  .news-card-img-overlay { position: absolute; inset: 0; background: rgba(4,44,83,0.45); }
+  .news-fish-wm { opacity: 0.1; }
+  .news-img-wave { position: absolute; bottom: 0; left: 0; right: 0; }
+  .news-card-body {
+    padding: 20px; display: flex; flex-direction: column; gap: 10px; flex: 1;
+  }
+  .news-tag {
+    display: inline-block; font-size: 10px; font-weight: 800;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    padding: 3px 10px; border-radius: 20px;
+  }
+  .tag-featured, .tag-company, .tag-founder { background: var(--light-blue); color: #0C447C; }
+  .tag-industry { background: #E1F5EE; color: #085041; }
+  .tag-award { background: #FAEEDA; color: #633806; }
+  .tag-press { background: #F1EFE8; color: #444441; }
+  .news-headline {
+    font-size: 16px; font-weight: 800; color: var(--navy); line-height: 1.4;
+    display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
+  }
+  .news-excerpt {
+    font-size: 14px; color: var(--text-muted); line-height: 1.6;
+    display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+  }
+  .news-meta {
+    font-size: 13px; color: var(--text-muted); display: flex;
+    align-items: center; gap: 8px; margin-top: auto; padding-top: 4px;
+  }
+  .news-meta-dot {
+    width: 3px; height: 3px; border-radius: 50%;
+    background: #c0c8d8; flex-shrink: 0;
+  }
+  .news-compact-list { display: flex; flex-direction: column; gap: 14px; }
+  .news-compact {
+    background: var(--white); border: 1.5px solid #e2e8f0; border-radius: 14px;
+    display: flex; overflow: hidden; text-decoration: none; transition: border-color 0.2s;
+    min-height: 90px;
+  }
+  .news-compact:hover { border-color: var(--navy); }
+  .news-compact-thumb {
+    width: 100px; flex-shrink: 0; background: var(--navy);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .news-compact-body {
+    padding: 14px 16px; display: flex; flex-direction: column;
+    gap: 7px; justify-content: center;
+  }
+  .news-compact-headline {
+    font-size: 14px; font-weight: 700; color: var(--navy); line-height: 1.4;
+    display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+  }
+  @media (max-width: 768px) {
+    .news-featured-row { grid-template-columns: 1fr; }
+    .news-section-header { flex-direction: column; align-items: flex-start; gap: 8px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ─── NAVBAR ─── -->
+<nav id="navbar">
+  <div class="container">
+    <div class="nav-inner">
+      <a href="index_v2.html" class="nav-logo">
+        <img src="https://res.cloudinary.com/dytehjyns/image/upload/v1782801132/IMG_2093_meg9zn.jpg" alt="Trader Sam Seafood">
+      </a>
+      <ul class="nav-links">
+        <li><a href="#hero">Home</a></li>
+        <li><a href="#products">Products</a></li>
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="#sustainability">Sustainability</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+      <div class="nav-cta">
+        <a href="#contact" class="btn">Request Catalog</a>
+      </div>
+      <button class="hamburger" id="hamburger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- Mobile Menu -->
+<div class="mobile-menu" id="mobile-menu">
+  <a href="#hero" class="mobile-link">Home</a>
+  <a href="#products" class="mobile-link">Products</a>
+  <a href="about.html" class="mobile-link">About Us</a>
+  <a href="#sustainability" class="mobile-link">Sustainability</a>
+  <a href="#contact" class="mobile-link">Contact</a>
+  <a href="#contact" class="btn btn-navy">Request Catalog</a>
+</div>
+
+<!-- ─── HERO ─── -->
+<section id="hero">
+  <div class="hero-bg-image"></div>
+  <div class="hero-bg-pattern"></div>
+  <div class="container">
+    <div class="hero-inner">
+      <div class="hero-content">
+        <p class="hero-eyebrow">Jakarta, Indonesia · Est. 2014</p>
+        <h1 class="hero-h1">From Indonesia's Waters to<br>Global Markets</h1>
+        <p class="hero-sub">Premium wild-caught seafood sourced across 17,000 islands. Processed to international standards. Trusted by importers in 25+ countries.</p>
+        <div class="hero-ctas">
+          <a href="#products" class="btn btn-primary">View Products</a>
+          <a href="#contact" class="btn btn-outline">Request Catalog</a>
+        </div>
+      </div>
+      <div class="hero-stats">
+        <div class="stat-card">
+          <div class="stat-number" data-target="10" data-suffix="+">0</div>
+          <div class="stat-label">Years Experience</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number" data-target="23" data-suffix="">0</div>
+          <div class="stat-label">Countries Served</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number" data-target="500" data-suffix="+">0</div>
+          <div class="stat-label">Partner Fishermen</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-wave">
+    <svg viewBox="0 0 1440 80" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0,40 C360,80 720,0 1080,40 C1260,60 1380,48 1440,40 L1440,80 L0,80 Z" fill="#ffffff"/>
+    </svg>
+  </div>
+</section>
+
+<!-- ─── PRODUCTS ─── -->
+<section id="products" class="section">
+  <div class="container">
+    <div class="products-header reveal">
+      <h2 class="section-title">Our Products</h2>
+    </div>
+    <div class="products-scroll-wrapper">
+      <button class="carousel-btn carousel-btn-left" id="carousel-prev" aria-label="Previous">&#8592;</button>
+      <button class="carousel-btn carousel-btn-right" id="carousel-next" aria-label="Next">&#8594;</button>
+      <div class="products-scroll" id="products-scroll">
+        <div class="products-scroll-inner" id="products-scroll-inner">
+
+
+          <div class="flip-card" tabindex="0" role="button">
+            <div class="flip-inner">
+              <div class="flip-front"><img class="flip-img" src="https://gabungansamuderainternasional.com/wp-content/uploads/2021/04/34.jpg" alt="Shrimp 34"></div>
+              <div class="flip-back"><h4>Shrimp</h4><ul><li>Available IQF &amp; Frozen</li><li>Export Grade</li><li>Wild Caught</li></ul><a href="#contact" class="btn">Request Quote</a></div>
+            </div>
+          </div>
+
+
+          <div class="flip-card" tabindex="0" role="button">
+            <div class="flip-inner">
+              <div class="flip-front"><img class="flip-img" src="https://gabungansamuderainternasional.com/wp-content/uploads/2021/04/38.jpg" alt="Skipjack Tuna 38"></div>
+              <div class="flip-back"><h4>Skipjack Tuna</h4><ul><li>Available IQF &amp; Frozen</li><li>Export Grade</li><li>Wild Caught</li></ul><a href="#contact" class="btn">Request Quote</a></div>
+            </div>
+          </div>
+
+
+          <div class="flip-card" tabindex="0" role="button">
+            <div class="flip-inner">
+              <div class="flip-front"><img class="flip-img" src="https://gabungansamuderainternasional.com/wp-content/uploads/2021/04/12-1.jpg" alt="Frozen Squid 12"></div>
+              <div class="flip-back"><h4>Frozen Squid</h4><ul><li>Available IQF &amp; Frozen</li><li>Export Grade</li><li>Wild Caught</li></ul><a href="#contact" class="btn">Request Quote</a></div>
+            </div>
+          </div>
+
+
+          <div class="flip-card" tabindex="0" role="button">
+            <div class="flip-inner">
+              <div class="flip-front"><img class="flip-img" src="https://gabungansamuderainternasional.com/wp-content/uploads/2021/04/31.jpg" alt="Frozen Squid 31"></div>
+              <div class="flip-back"><h4>Frozen Squid</h4><ul><li>Available IQF &amp; Frozen</li><li>Export Grade</li><li>Wild Caught</li></ul><a href="#contact" class="btn">Request Quote</a></div>
+            </div>
+          </div>
+
+
+          <div class="flip-card" tabindex="0" role="button">
+            <div class="flip-inner">
+              <div class="flip-front"><img class="flip-img" src="https://gabungansamuderainternasional.com/wp-content/uploads/2021/04/4-1.jpg" alt="Red Snapper 4"></div>
+              <div class="flip-back"><h4>Red Snapper</h4><ul><li>Available IQF &amp; Frozen</li><li>Export Grade</li><li>Wild Caught</li></ul><a href="#contact" class="btn">Request Quote</a></div>
+            </div>
+          </div>
+
+
+          <div class="flip-card" tabindex="0" role="button">
+            <div class="flip-inner">
+              <div class="flip-front"><img class="flip-img" src="https://gabungansamuderainternasional.com/wp-content/uploads/2021/04/14-1.jpg" alt="Nila Tilapia 14"></div>
+              <div class="flip-back"><h4>Nila Tilapia</h4><ul><li>Available IQF &amp; Frozen</li><li>Export Grade</li><li>Wild Caught</li></ul><a href="#contact" class="btn">Request Quote</a></div>
+            </div>
+          </div>
+
+
+          <div class="flip-card" tabindex="0" role="button">
+            <div class="flip-inner">
+              <div class="flip-front"><img class="flip-img" src="https://gabungansamuderainternasional.com/wp-content/uploads/2021/04/8-1.jpg" alt="Deep Leatherski 8"></div>
+              <div class="flip-back"><h4>Deep Leatherski</h4><ul><li>Available IQF &amp; Frozen</li><li>Export Grade</li><li>Wild Caught</li></ul><a href="#contact" class="btn">Request Quote</a></div>
+            </div>
+          </div>
+
+
+          <div class="flip-card" tabindex="0" role="button">
+            <div class="flip-inner">
+              <div class="flip-front"><img class="flip-img" src="https://gabungansamuderainternasional.com/wp-content/uploads/2021/04/6-1.jpg" alt="Yellowtail Fish 6"></div>
+              <div class="flip-back"><h4>Yellowtail Fish</h4><ul><li>Available IQF &amp; Frozen</li><li>Export Grade</li><li>Wild Caught</li></ul><a href="#contact" class="btn">Request Quote</a></div>
+            </div>
+          </div>
+
+
+          <div class="flip-card" tabindex="0" role="button">
+            <div class="flip-inner">
+              <div class="flip-front"><img class="flip-img" src="https://gabungansamuderainternasional.com/wp-content/uploads/2021/04/32.jpg" alt="Cuttlefish 32"></div>
+              <div class="flip-back"><h4>Cuttlefish</h4><ul><li>Available IQF &amp; Frozen</li><li>Export Grade</li><li>Wild Caught</li></ul><a href="#contact" class="btn">Request Quote</a></div>
+            </div>
+          </div>
+
+
+          <div class="flip-card" tabindex="0" role="button">
+            <div class="flip-inner">
+              <div class="flip-front"><img class="flip-img" src="https://gabungansamuderainternasional.com/wp-content/uploads/2021/04/39.jpg" alt="Mahi Mahi 39"></div>
+              <div class="flip-back"><h4>Mahi Mahi</h4><ul><li>Available IQF &amp; Frozen</li><li>Export Grade</li><li>Wild Caught</li></ul><a href="#contact" class="btn">Request Quote</a></div>
+            </div>
+          </div>
+
+
+          <div class="flip-card" tabindex="0" role="button">
+            <div class="flip-inner">
+              <div class="flip-front"><img class="flip-img" src="https://gabungansamuderainternasional.com/wp-content/uploads/2021/04/11.jpg" alt="Chub Mackerel 11"></div>
+              <div class="flip-back"><h4>Chub Mackerel</h4><ul><li>Available IQF &amp; Frozen</li><li>Export Grade</li><li>Wild Caught</li></ul><a href="#contact" class="btn">Request Quote</a></div>
+            </div>
+          </div>
+
+
+          <div class="flip-card" tabindex="0" role="button">
+            <div class="flip-inner">
+              <div class="flip-front"><img class="flip-img" src="https://gabungansamuderainternasional.com/wp-content/uploads/2021/04/18.jpg" alt="Sardines 18"></div>
+              <div class="flip-back"><h4>Sardines</h4><ul><li>Available IQF &amp; Frozen</li><li>Export Grade</li><li>Wild Caught</li></ul><a href="#contact" class="btn">Request Quote</a></div>
+            </div>
+          </div>
+
+
+          <div class="flip-card" tabindex="0" role="button">
+            <div class="flip-inner">
+              <div class="flip-front"><img class="flip-img" src="https://gabungansamuderainternasional.com/wp-content/uploads/2021/04/19.jpg" alt="Silver Pomfret 19"></div>
+              <div class="flip-back"><h4>Silver Pomfret</h4><ul><li>Available IQF &amp; Frozen</li><li>Export Grade</li><li>Wild Caught</li></ul><a href="#contact" class="btn">Request Quote</a></div>
+            </div>
+          </div>
+
+
+          <div class="flip-card" tabindex="0" role="button">
+            <div class="flip-inner">
+              <div class="flip-front"><img class="flip-img" src="https://gabungansamuderainternasional.com/wp-content/uploads/2021/04/20.jpg" alt="Black Pomfret 20"></div>
+              <div class="flip-back"><h4>Black Pomfret</h4><ul><li>Available IQF &amp; Frozen</li><li>Export Grade</li><li>Wild Caught</li></ul><a href="#contact" class="btn">Request Quote</a></div>
+            </div>
+          </div>
+
+
+          <div class="flip-card" tabindex="0" role="button">
+            <div class="flip-inner">
+              <div class="flip-front"><img class="flip-img" src="https://gabungansamuderainternasional.com/wp-content/uploads/2021/04/1.jpg" alt="Croaker"></div>
+              <div class="flip-back"><h4>Croaker</h4><ul><li>200–400g, 400–600g</li><li>Whole Round Frozen</li><li>Gutted &amp; Scaled</li><li>Wild Caught</li></ul><a href="#contact" class="btn">Request Quote</a></div>
+            </div>
+          </div>
+
+
+          <div class="flip-card" tabindex="0" role="button">
+            <div class="flip-inner">
+              <div class="flip-front"><img class="flip-img" src="https://gabungansamuderainternasional.com/wp-content/uploads/2021/04/2-1.jpg" alt="Dory Fish"></div>
+              <div class="flip-back"><h4>Dory Fish</h4><ul><li>Skinless Fillet</li><li>IQF &amp; Block Frozen</li><li>Portioned Available</li><li>Mild White Flesh</li></ul><a href="#contact" class="btn">Request Quote</a></div>
+            </div>
+          </div>
+
+
+          <div class="flip-card" tabindex="0" role="button">
+            <div class="flip-inner">
+              <div class="flip-front"><img class="flip-img" src="https://gabungansamuderainternasional.com/wp-content/uploads/2021/04/3-1.jpg" alt="Small Toothed Emperor 3"></div>
+              <div class="flip-back"><h4>Small Toothed Emperor</h4><ul><li>Available IQF &amp; Frozen</li><li>Export Grade</li><li>Wild Caught</li></ul><a href="#contact" class="btn">Request Quote</a></div>
+            </div>
+          </div>
+
+
+          <div class="flip-card" tabindex="0" role="button">
+            <div class="flip-inner">
+              <div class="flip-front"><img class="flip-img" src="https://gabungansamuderainternasional.com/wp-content/uploads/2021/04/5-1.jpg" alt="Barramundi Breams 5"></div>
+              <div class="flip-back"><h4>Barramundi Breams</h4><ul><li>Available IQF &amp; Frozen</li><li>Export Grade</li><li>Wild Caught</li></ul><a href="#contact" class="btn">Request Quote</a></div>
+            </div>
+          </div>
+
+
+          <div class="flip-card" tabindex="0" role="button">
+            <div class="flip-inner">
+              <div class="flip-front"><img class="flip-img" src="https://gabungansamuderainternasional.com/wp-content/uploads/2021/04/7-1.jpg" alt="Great Barracuda 7"></div>
+              <div class="flip-back"><h4>Great Barracuda</h4><ul><li>Available IQF &amp; Frozen</li><li>Export Grade</li><li>Wild Caught</li></ul><a href="#contact" class="btn">Request Quote</a></div>
+            </div>
+          </div>
+
+
+          <div class="flip-card" tabindex="0" role="button">
+            <div class="flip-inner">
+              <div class="flip-front"><img class="flip-img" src="https://gabungansamuderainternasional.com/wp-content/uploads/2021/04/9-1.jpg" alt="Marine Catfish 9"></div>
+              <div class="flip-back"><h4>Marine Catfish</h4><ul><li>Available IQF &amp; Frozen</li><li>Export Grade</li><li>Wild Caught</li></ul><a href="#contact" class="btn">Request Quote</a></div>
+            </div>
+          </div>
+
+
+          <div class="flip-card" tabindex="0" role="button">
+            <div class="flip-inner">
+              <div class="flip-front"><img class="flip-img" src="https://gabungansamuderainternasional.com/wp-content/uploads/2021/04/10.jpg" alt="Easter Little Tunas 10"></div>
+              <div class="flip-back"><h4>Easter Little Tunas</h4><ul><li>Available IQF &amp; Frozen</li><li>Export Grade</li><li>Wild Caught</li></ul><a href="#contact" class="btn">Request Quote</a></div>
+            </div>
+          </div>
+
+
+          <div class="flip-card" tabindex="0" role="button">
+            <div class="flip-inner">
+              <div class="flip-front"><img class="flip-img" src="https://gabungansamuderainternasional.com/wp-content/uploads/2021/04/13-1.jpg" alt="Gourami 13"></div>
+              <div class="flip-back"><h4>Gourami</h4><ul><li>Available IQF &amp; Frozen</li><li>Export Grade</li><li>Wild Caught</li></ul><a href="#contact" class="btn">Request Quote</a></div>
+            </div>
+          </div>
+
+
+          <div class="flip-card" tabindex="0" role="button">
+            <div class="flip-inner">
+              <div class="flip-front"><img class="flip-img" src="https://gabungansamuderainternasional.com/wp-content/uploads/2021/04/15.jpg" alt="Indo Pacific Mackerel 15"></div>
+              <div class="flip-back"><h4>Indo Pacific Mackerel</h4><ul><li>Available IQF &amp; Frozen</li><li>Export Grade</li><li>Wild Caught</li></ul><a href="#contact" class="btn">Request Quote</a></div>
+            </div>
+          </div>
+
+
+          <div class="flip-card" tabindex="0" role="button">
+            <div class="flip-inner">
+              <div class="flip-front"><img class="flip-img" src="https://gabungansamuderainternasional.com/wp-content/uploads/2021/04/16.jpg" alt="Indo Pacific Mackerel 16"></div>
+              <div class="flip-back"><h4>Indo Pacific Mackerel</h4><ul><li>Available IQF &amp; Frozen</li><li>Export Grade</li><li>Wild Caught</li></ul><a href="#contact" class="btn">Request Quote</a></div>
+            </div>
+          </div>
+
+
+          <div class="flip-card" tabindex="0" role="button">
+            <div class="flip-inner">
+              <div class="flip-front"><img class="flip-img" src="https://gabungansamuderainternasional.com/wp-content/uploads/2021/04/17.jpg" alt="Bali Sardinella 17"></div>
+              <div class="flip-back"><h4>Bali Sardinella</h4><ul><li>Available IQF &amp; Frozen</li><li>Export Grade</li><li>Wild Caught</li></ul><a href="#contact" class="btn">Request Quote</a></div>
+            </div>
+          </div>
+
+
+          <div class="flip-card" tabindex="0" role="button">
+            <div class="flip-inner">
+              <div class="flip-front"><img class="flip-img" src="https://gabungansamuderainternasional.com/wp-content/uploads/2021/04/21.jpg" alt="Goldbanded Fusilier 21"></div>
+              <div class="flip-back"><h4>Goldbanded Fusilier</h4><ul><li>Available IQF &amp; Frozen</li><li>Export Grade</li><li>Wild Caught</li></ul><a href="#contact" class="btn">Request Quote</a></div>
+            </div>
+          </div>
+
+
+          <div class="flip-card" tabindex="0" role="button">
+            <div class="flip-inner">
+              <div class="flip-front"><img class="flip-img" src="https://gabungansamuderainternasional.com/wp-content/uploads/2021/04/22.jpg" alt="Yellowstripe Trevally 22"></div>
+              <div class="flip-back"><h4>Yellowstripe Trevally</h4><ul><li>Available IQF &amp; Frozen</li><li>Export Grade</li><li>Wild Caught</li></ul><a href="#contact" class="btn">Request Quote</a></div>
+            </div>
+          </div>
+
+
+          <div class="flip-card" tabindex="0" role="button">
+            <div class="flip-inner">
+              <div class="flip-front"><img class="flip-img" src="https://gabungansamuderainternasional.com/wp-content/uploads/2021/04/23.jpg" alt="Giant Threadfish 23"></div>
+              <div class="flip-back"><h4>Giant Threadfish</h4><ul><li>Available IQF &amp; Frozen</li><li>Export Grade</li><li>Wild Caught</li></ul><a href="#contact" class="btn">Request Quote</a></div>
+            </div>
+          </div>
+
+
+          <div class="flip-card" tabindex="0" role="button">
+            <div class="flip-inner">
+              <div class="flip-front"><img class="flip-img" src="https://gabungansamuderainternasional.com/wp-content/uploads/2021/04/24.jpg" alt="Bigeye Scad 24"></div>
+              <div class="flip-back"><h4>Bigeye Scad</h4><ul><li>Available IQF &amp; Frozen</li><li>Export Grade</li><li>Wild Caught</li></ul><a href="#contact" class="btn">Request Quote</a></div>
+            </div>
+          </div>
+
+
+          <div class="flip-card" tabindex="0" role="button">
+            <div class="flip-inner">
+              <div class="flip-front"><img class="flip-img" src="https://gabungansamuderainternasional.com/wp-content/uploads/2021/04/25.jpg" alt="Leopard Coral Trout 25"></div>
+              <div class="flip-back"><h4>Leopard Coral Trout</h4><ul><li>Available IQF &amp; Frozen</li><li>Export Grade</li><li>Wild Caught</li></ul><a href="#contact" class="btn">Request Quote</a></div>
+            </div>
+          </div>
+
+
+          <div class="flip-card" tabindex="0" role="button">
+            <div class="flip-inner">
+              <div class="flip-front"><img class="flip-img" src="https://gabungansamuderainternasional.com/wp-content/uploads/2021/04/26.jpg" alt="Barred Cheek Coral Trout 26"></div>
+              <div class="flip-back"><h4>Barred Cheek Coral Trout</h4><ul><li>Available IQF &amp; Frozen</li><li>Export Grade</li><li>Wild Caught</li></ul><a href="#contact" class="btn">Request Quote</a></div>
+            </div>
+          </div>
+
+
+          <div class="flip-card" tabindex="0" role="button">
+            <div class="flip-inner">
+              <div class="flip-front"><img class="flip-img" src="https://gabungansamuderainternasional.com/wp-content/uploads/2021/04/27.jpg" alt="Salmon 27"></div>
+              <div class="flip-back"><h4>Salmon</h4><ul><li>Available IQF &amp; Frozen</li><li>Export Grade</li><li>Wild Caught</li></ul><a href="#contact" class="btn">Request Quote</a></div>
+            </div>
+          </div>
+
+
+          <div class="flip-card" tabindex="0" role="button">
+            <div class="flip-inner">
+              <div class="flip-front"><img class="flip-img" src="https://gabungansamuderainternasional.com/wp-content/uploads/2021/04/28.jpg" alt="Yellow Pike-Conger 28"></div>
+              <div class="flip-back"><h4>Yellow Pike-Conger</h4><ul><li>Available IQF &amp; Frozen</li><li>Export Grade</li><li>Wild Caught</li></ul><a href="#contact" class="btn">Request Quote</a></div>
+            </div>
+          </div>
+
+
+          <div class="flip-card" tabindex="0" role="button">
+            <div class="flip-inner">
+              <div class="flip-front"><img class="flip-img" src="https://gabungansamuderainternasional.com/wp-content/uploads/2021/04/29.jpg" alt="Spanish Mackerel 29"></div>
+              <div class="flip-back"><h4>Spanish Mackerel</h4><ul><li>Available IQF &amp; Frozen</li><li>Export Grade</li><li>Wild Caught</li></ul><a href="#contact" class="btn">Request Quote</a></div>
+            </div>
+          </div>
+
+
+          <div class="flip-card" tabindex="0" role="button">
+            <div class="flip-inner">
+              <div class="flip-front"><img class="flip-img" src="https://gabungansamuderainternasional.com/wp-content/uploads/2021/04/30.jpg" alt="Hairtail 30"></div>
+              <div class="flip-back"><h4>Hairtail</h4><ul><li>Available IQF &amp; Frozen</li><li>Export Grade</li><li>Wild Caught</li></ul><a href="#contact" class="btn">Request Quote</a></div>
+            </div>
+          </div>
+
+
+          <div class="flip-card" tabindex="0" role="button">
+            <div class="flip-inner">
+              <div class="flip-front"><img class="flip-img" src="https://gabungansamuderainternasional.com/wp-content/uploads/2021/04/33.jpg" alt="Ark Cockle Shell 33"></div>
+              <div class="flip-back"><h4>Ark Cockle Shell</h4><ul><li>Available IQF &amp; Frozen</li><li>Export Grade</li><li>Wild Caught</li></ul><a href="#contact" class="btn">Request Quote</a></div>
+            </div>
+          </div>
+
+
+          <div class="flip-card" tabindex="0" role="button">
+            <div class="flip-inner">
+              <div class="flip-front"><img class="flip-img" src="https://gabungansamuderainternasional.com/wp-content/uploads/2021/04/35.jpg" alt="Window Shell 35"></div>
+              <div class="flip-back"><h4>Window Shell</h4><ul><li>Available IQF &amp; Frozen</li><li>Export Grade</li><li>Wild Caught</li></ul><a href="#contact" class="btn">Request Quote</a></div>
+            </div>
+          </div>
+
+
+          <div class="flip-card" tabindex="0" role="button">
+            <div class="flip-inner">
+              <div class="flip-front"><img class="flip-img" src="https://gabungansamuderainternasional.com/wp-content/uploads/2021/04/36.jpg" alt="Baby Clam 36"></div>
+              <div class="flip-back"><h4>Baby Clam</h4><ul><li>Available IQF &amp; Frozen</li><li>Export Grade</li><li>Wild Caught</li></ul><a href="#contact" class="btn">Request Quote</a></div>
+            </div>
+          </div>
+
+
+          <div class="flip-card" tabindex="0" role="button">
+            <div class="flip-inner">
+              <div class="flip-front"><img class="flip-img" src="https://gabungansamuderainternasional.com/wp-content/uploads/2021/04/37.jpg" alt="Parrot Fish 37"></div>
+              <div class="flip-back"><h4>Parrot Fish</h4><ul><li>Available IQF &amp; Frozen</li><li>Export Grade</li><li>Wild Caught</li></ul><a href="#contact" class="btn">Request Quote</a></div>
+            </div>
+          </div>
+
+
+          <div class="flip-card" tabindex="0" role="button">
+            <div class="flip-inner">
+              <div class="flip-front"><img class="flip-img" src="https://gabungansamuderainternasional.com/wp-content/uploads/2021/04/40.jpg" alt="Rabbit Fish 40"></div>
+              <div class="flip-back"><h4>Rabbit Fish</h4><ul><li>Available IQF &amp; Frozen</li><li>Export Grade</li><li>Wild Caught</li></ul><a href="#contact" class="btn">Request Quote</a></div>
+            </div>
+          </div>
+
+
+          <div class="flip-card" tabindex="0" role="button">
+            <div class="flip-inner">
+              <div class="flip-front"><img class="flip-img" src="https://gabungansamuderainternasional.com/wp-content/uploads/2021/04/41.jpg" alt="Golden Jack 41"></div>
+              <div class="flip-back"><h4>Golden Jack</h4><ul><li>Available IQF &amp; Frozen</li><li>Export Grade</li><li>Wild Caught</li></ul><a href="#contact" class="btn">Request Quote</a></div>
+            </div>
+          </div>
+
+
+          <div class="flip-card" tabindex="0" role="button">
+            <div class="flip-inner">
+              <div class="flip-front"><img class="flip-img" src="https://gabungansamuderainternasional.com/wp-content/uploads/2021/04/42.jpg" alt="Anchovies 42"></div>
+              <div class="flip-back"><h4>Anchovies</h4><ul><li>Available IQF &amp; Frozen</li><li>Export Grade</li><li>Wild Caught</li></ul><a href="#contact" class="btn">Request Quote</a></div>
+            </div>
+          </div>
+</div><!-- end products-scroll-inner -->
+      </div><!-- end products-scroll -->
+    </div>
+
+    <div class="view-all-wrap reveal">
+      <a href="products.html" class="btn btn-outline-navy">View All Products &nbsp;→</a>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ─── SUPPLY CHAIN ─── -->
+<section id="supply" class="section">
+  <div class="container">
+    <div class="reveal" style="text-align:center; max-width:600px; margin:0 auto;">
+      <h2 class="section-title">From Ocean to Your Facility</h2>
+      <p class="section-sub" style="margin:0 auto;">Our vertically integrated supply chain ensures freshness, traceability, and compliance at every stage.</p>
+    </div>
+    <div class="supply-timeline" id="supply-timeline">
+      <div class="supply-step">
+        <div class="step-img"><span class="step-num">1</span><img src="https://res.cloudinary.com/dytehjyns/image/upload/v1782800985/IMG_2100_yeyvyo.jpg" alt="Sustainable Fishing"></div>
+        <div class="step-title">Sustainable Fishing</div>
+      </div>
+      <div class="supply-step">
+        <div class="step-img"><span class="step-num">2</span><img src="https://res.cloudinary.com/dytehjyns/image/upload/v1782800978/IMG_2103_e8tlcx.jpg" alt="Cold Chain Start"></div>
+        <div class="step-title">Cold Chain Start</div>
+      </div>
+      <div class="supply-step">
+        <div class="step-img"><span class="step-num">3</span><img src="https://res.cloudinary.com/dytehjyns/image/upload/v1782800973/IMG_2104_kwfeof.jpg" alt="Processing"></div>
+        <div class="step-title">Processing</div>
+      </div>
+      <div class="supply-step">
+        <div class="step-img"><span class="step-num">4</span><img src="https://res.cloudinary.com/dytehjyns/image/upload/v1782800931/IMG_2105_prtubt.webp" alt="Quality Control"></div>
+        <div class="step-title">Quality Control</div>
+      </div>
+      <div class="supply-step">
+        <div class="step-img"><span class="step-num">5</span><img src="https://res.cloudinary.com/dytehjyns/image/upload/v1782801052/IMG_2102_uxgwtj.jpg" alt="Compliance Check"></div>
+        <div class="step-title">Compliance Check</div>
+      </div>
+      <div class="supply-step">
+        <div class="step-img"><span class="step-num">6</span><img src="https://res.cloudinary.com/dytehjyns/image/upload/v1782800904/IMG_2107_siaa2s.jpg" alt="Export"></div>
+        <div class="step-title">Export</div>
+      </div>
+    </div>
+    <!-- Quality pillars banner -->
+    <div style="margin-top:56px; background: linear-gradient(135deg, var(--navy) 0%, var(--deep) 100%); border-radius:20px; padding:48px 40px; color:var(--white);">
+      <div style="text-align:center; margin-bottom:40px;">
+        <div style="font-size:11px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:rgba(255,255,255,0.55); margin-bottom:8px;">Why Our Quality Stands Apart</div>
+        <div style="font-size:clamp(22px,3vw,32px); font-weight:800; line-height:1.2;">Every shipment leaves with zero compromise.</div>
+      </div>
+      <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:rgba(255,255,255,0.12); border-radius:12px; overflow:hidden;">
+        <div style="background:rgba(255,255,255,0.06); padding:32px 28px; text-align:center;">
+          <div style="width:60px;height:60px;border-radius:50%;background:rgba(55,138,221,0.25);border:2px solid rgba(55,138,221,0.5);display:flex;align-items:center;justify-content:center;margin:0 auto 20px;">
+            <i class="ph ph-seal-check" style="font-size:28px;color:#6ab8f7;"></i>
+          </div>
+          <div style="font-size:18px; font-weight:800; margin-bottom:10px;">Third-Party Certified</div>
+          <div style="font-size:13px; color:rgba(255,255,255,0.65); line-height:1.65;">FDA, HACCP, GMP &amp; Halal certifications — independently audited, third-party certified.</div>
+        </div>
+        <div style="background:rgba(255,255,255,0.06); padding:32px 28px; text-align:center;">
+          <div style="width:60px;height:60px;border-radius:50%;background:rgba(55,138,221,0.25);border:2px solid rgba(55,138,221,0.5);display:flex;align-items:center;justify-content:center;margin:0 auto 20px;">
+            <i class="ph ph-leaf" style="font-size:28px;color:#6ab8f7;"></i>
+          </div>
+          <div style="font-size:18px; font-weight:800; margin-bottom:10px;">Sustainability First</div>
+          <div style="font-size:13px; color:rgba(255,255,255,0.65); line-height:1.65;">Partner fishermen operating within traceable, responsible catch limits across the archipelago.</div>
+        </div>
+        <div style="background:rgba(255,255,255,0.06); padding:32px 28px; text-align:center;">
+          <div style="width:60px;height:60px;border-radius:50%;background:rgba(55,138,221,0.25);border:2px solid rgba(55,138,221,0.5);display:flex;align-items:center;justify-content:center;margin:0 auto 20px;">
+            <i class="ph ph-list-checks" style="font-size:28px;color:#6ab8f7;"></i>
+          </div>
+          <div style="font-size:18px; font-weight:800; margin-bottom:10px;">Full Traceability</div>
+          <div style="font-size:13px; color:rgba(255,255,255,0.65); line-height:1.65;">Lot-level documentation from catch origin to delivery — auditable at every step.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── CERTIFICATIONS ─── -->
+<section id="certs" class="section">
+  <div class="container">
+    <div class="reveal" style="text-align:center; max-width:560px; margin:0 auto 0;">
+      <p class="section-eyebrow">Compliance & Standards</p>
+      <h2 class="section-title">Quality You Can Count On</h2>
+      <p class="section-sub" style="margin:0 auto;">Our facilities and processes meet the most rigorous international food safety and export compliance requirements.</p>
+    </div>
+    <div class="certs-grid">
+      <div class="cert-card reveal">
+        <div class="cert-icon"><img src="https://res.cloudinary.com/dytehjyns/image/upload/v1782799519/IMG_2094_gmdvxg.png" alt="FDA" style="width:160px;height:160px;object-fit:cover;border-radius:50%;"></div>
+      </div>
+      <div class="cert-card reveal">
+        <div class="cert-icon"><img src="https://res.cloudinary.com/dytehjyns/image/upload/v1782799554/IMG_2096_dauodr.png" alt="GMP" style="width:160px;height:160px;object-fit:cover;border-radius:50%;"></div>
+      </div>
+      <div class="cert-card reveal">
+        <div class="cert-icon"><img src="https://res.cloudinary.com/dytehjyns/image/upload/v1782801145/IMG_2098_m6x2hc.jpg" alt="HACCP" style="width:160px;height:160px;object-fit:cover;border-radius:50%;"></div>
+      </div>
+      <div class="cert-card reveal">
+        <div class="cert-icon"><img src="https://res.cloudinary.com/dytehjyns/image/upload/v1782799538/IMG_2099_fao4pw.png" alt="Halal" style="width:160px;height:160px;object-fit:cover;border-radius:50%;"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── SUSTAINABILITY ─── -->
+<section id="sustainability" class="section" style="background:var(--light-blue);">
+  <div class="container">
+    <div class="reveal" style="display:flex; align-items:flex-end; justify-content:space-between; gap:32px; margin-bottom:48px; flex-wrap:wrap;">
+      <div>
+        <p class="section-eyebrow">People &amp; Planet</p>
+        <h2 class="section-title" style="margin-bottom:0;">Our Commitment</h2>
+      </div>
+    </div>
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;" class="reveal">
+      <div style="background:var(--white); border-radius:16px; padding:32px; display:flex; align-items:flex-start; gap:20px;">
+        <div style="width:48px;height:48px;flex-shrink:0;border-radius:12px;background:var(--light-blue);display:flex;align-items:center;justify-content:center;">
+          <i class="ph ph-currency-circle-dollar" style="font-size:24px;color:var(--navy);"></i>
+        </div>
+        <div>
+          <div style="font-size:16px;font-weight:800;color:var(--navy);margin-bottom:6px;">Fair Purchasing Programs</div>
+          <div style="font-size:13px;color:var(--text-muted);line-height:1.65;">Fishermen are paid fair, transparent prices — building loyalty and long-term supply stability.</div>
+        </div>
+      </div>
+      <div style="background:var(--white); border-radius:16px; padding:32px; display:flex; align-items:flex-start; gap:20px;">
+        <div style="width:48px;height:48px;flex-shrink:0;border-radius:12px;background:var(--light-blue);display:flex;align-items:center;justify-content:center;">
+          <i class="ph ph-fish" style="font-size:24px;color:var(--navy);"></i>
+        </div>
+        <div>
+          <div style="font-size:16px;font-weight:800;color:var(--navy);margin-bottom:6px;">Responsible Sourcing</div>
+          <div style="font-size:13px;color:var(--text-muted);line-height:1.65;">We only source from fisheries operating within verified, sustainable catch limits.</div>
+        </div>
+      </div>
+      <div style="background:var(--white); border-radius:16px; padding:32px; display:flex; align-items:flex-start; gap:20px;">
+        <div style="width:48px;height:48px;flex-shrink:0;border-radius:12px;background:var(--light-blue);display:flex;align-items:center;justify-content:center;">
+          <i class="ph ph-handshake" style="font-size:24px;color:var(--navy);"></i>
+        </div>
+        <div>
+          <div style="font-size:16px;font-weight:800;color:var(--navy);margin-bottom:6px;">Long-Term Relationships</div>
+          <div style="font-size:13px;color:var(--text-muted);line-height:1.65;">Multi-year partnerships with fishing cooperatives ensure consistent supply and shared growth.</div>
+        </div>
+      </div>
+      <div style="background:var(--white); border-radius:16px; padding:32px; display:flex; align-items:flex-start; gap:20px;">
+        <div style="width:48px;height:48px;flex-shrink:0;border-radius:12px;background:var(--light-blue);display:flex;align-items:center;justify-content:center;">
+          <i class="ph ph-buildings" style="font-size:24px;color:var(--navy);"></i>
+        </div>
+        <div>
+          <div style="font-size:16px;font-weight:800;color:var(--navy);margin-bottom:6px;">Community Investment</div>
+          <div style="font-size:13px;color:var(--text-muted);line-height:1.65;">We invest in coastal infrastructure and training — stronger communities, better seafood.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── STATS ─── -->
+<section id="stats" class="section">
+  <div class="container">
+    <div class="stats-grid">
+      <div class="stat-block reveal">
+        <div class="stat-big"><span data-stat="10">0</span><span class="stat-unit">+</span></div>
+        <div class="stat-desc">Years in Operation</div>
+      </div>
+      <div class="stat-block reveal">
+        <div class="stat-big"><span data-stat="25">0</span><span class="stat-unit">+</span></div>
+        <div class="stat-desc">Countries Served</div>
+      </div>
+      <div class="stat-block reveal">
+        <div class="stat-big"><span data-stat="500">0</span><span class="stat-unit">+</span></div>
+        <div class="stat-desc">Partner Fishermen</div>
+      </div>
+      <div class="stat-block reveal">
+        <div class="stat-big"><span data-stat="1000">0</span><span class="stat-unit">+</span></div>
+        <div class="stat-desc">Export Shipments</div>
+      </div>
+    </div>
+    <p class="stats-para reveal">For over a decade, Trader Sam Seafood has supplied premium Indonesian seafood to customers worldwide, combining local sourcing expertise with reliable export operations and rigorous quality assurance.</p>
+  </div>
+</section>
+
+<!-- ─── GALLERY ─── -->
+<section id="gallery" class="section" style="background: var(--light-blue)">
+  <div class="container">
+    <div class="reveal" style="margin-bottom:0;">
+      <p class="section-eyebrow">Infrastructure</p>
+      <h2 class="section-title">Our Facility</h2>
+    </div>
+    <div class="gallery-grid">
+      <div class="gallery-item reveal"><div class="gallery-icon">🏭</div><div class="gallery-label">Processing Floor</div></div>
+      <div class="gallery-item reveal" style="background:#0a3a6e;"><div class="gallery-icon">🧊</div><div class="gallery-label">Cold Storage</div></div>
+      <div class="gallery-item reveal" style="background:#0e4d82;"><div class="gallery-icon">🔬</div><div class="gallery-label">Quality Control Lab</div></div>
+      <div class="gallery-item reveal" style="background:#163a5f;"><div class="gallery-icon">🚢</div><div class="gallery-label">Container Loading</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── NEWS ─── -->
+<section id="news" class="section">
+  <div class="container">
+    <div class="news-section-header reveal">
+      <div>
+        <p class="section-eyebrow">Media &amp; Press</p>
+        <h2 class="section-title" style="margin-bottom:0;">News &amp; Press</h2>
+      </div>
+      <a href="#news" class="news-all-link">All articles →</a>
+    </div>
+    <div id="news-featured-row" class="news-featured-row"></div>
+    <div id="news-compact-list" class="news-compact-list"></div>
+  </div>
+</section>
+
+<!-- ─── CONTACT (rebuilt with product interest text field) ─── -->
+<section id="contact" class="section">
+  <div class="container">
+    <div class="reveal" style="margin-bottom:48px;">
+      <p class="section-eyebrow">Get In Touch</p>
+      <h2 class="section-title">Request a Catalog or Quote</h2>
+      <p class="section-sub">Fill out the form and we'll respond within one business day, or reach us directly via WhatsApp.</p>
+    </div>
+    <div class="contact-grid">
+      <form class="contact-form reveal" id="contact-form" onsubmit="handleSubmit(event)">
+        <div class="form-group">
+          <label for="name">Full Name</label>
+          <input type="text" id="name" name="name" placeholder="Your name" required>
+        </div>
+        <div class="form-group">
+          <label for="company">Company / Organisation</label>
+          <input type="text" id="company" name="company" placeholder="Your company">
+        </div>
+        <div class="form-group">
+          <label for="country">Country</label>
+          <select id="country" name="country" required>
+            <option value="">Select country...</option>
+            <option>Japan</option><option>South Korea</option><option>China</option>
+            <option>United States</option><option>Germany</option><option>Netherlands</option>
+            <option>United Kingdom</option><option>Australia</option><option>UAE</option>
+            <option>Saudi Arabia</option><option>Singapore</option><option>Malaysia</option>
+            <option>Thailand</option><option>Vietnam</option><option>Philippines</option>
+            <option>India</option><option>Other</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="email">Email Address</label>
+          <input type="email" id="email" name="email" placeholder="your@email.com" required>
+        </div>
+        <div class="form-group">
+          <label for="products-interest">Product Interest</label>
+          <input type="text" id="products-interest" name="products-interest" placeholder="e.g. Squid, Tuna, Shrimp — or describe what you need">
+        </div>
+        <div class="form-actions">
+          <button type="submit" id="wa-btn" class="btn btn-whatsapp">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+            Send via WhatsApp
+          </button>
+          <button type="button" onclick="handleEmail()" class="btn btn-navy" style="font-size:14px;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 7l10 7 10-7"/></svg>
+            Submit by Email
+          </button>
+        </div>
+      </form>
+
+      <div class="contact-info reveal">
+        <div>
+          <div class="contact-info-title">Direct Contact</div>
+          <p style="font-size:15px; color:var(--text-muted); line-height:1.6;">Our export team is available Monday–Friday, 8:00am–4:30pm WIB (UTC+7). We respond to all inquiries within one business day.</p>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon"><i class="ph ph-phone"></i></div>
+          <div>
+            <div class="contact-item-label">Phone</div>
+            <div class="contact-item-value"><a href="tel:+622122663217">+62 21 2266 3217</a></div>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+          </div>
+          <div>
+            <div class="contact-item-label">WhatsApp</div>
+            <div class="contact-item-value" style="color:var(--text-muted); font-style:italic;">Temporarily unavailable</div>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon"><i class="ph ph-envelope"></i></div>
+          <div>
+            <div class="contact-item-label">Email</div>
+            <div class="contact-item-value"><a href="mailto:info@gabungansamuderainternasional.com">info@gabungansamuderainternasional.com</a></div>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon"><i class="ph ph-map-pin"></i></div>
+          <div>
+            <div class="contact-item-label">Location</div>
+            <div class="contact-item-value" style="font-size:14px; line-height:1.6;">Kawasan Pelabuhan Perikanan Muara Angke<br><span style="font-weight:400; color:var(--text-muted);">Jl. Pendaratan Ikan No. 05, RT.22/RW.11, Pluit<br>Kec. Penjaringan, Jakarta Utara 14450</span></div>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon"><i class="ph ph-clock"></i></div>
+          <div>
+            <div class="contact-item-label">Business Hours</div>
+            <div class="contact-item-value">Mon–Fri: 8:00am – 4:30pm<br><span style="font-size:14px; color:var(--text-muted); font-weight:400;">WIB (UTC+7)</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── FOOTER ─── -->
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="#" class="nav-logo" style="margin-bottom:16px; display:inline-flex;">
+          <img src="https://res.cloudinary.com/dytehjyns/image/upload/v1782801132/IMG_2093_meg9zn.jpg" alt="Trader Sam Seafood" style="height:60px; width:auto; border-radius:8px;">
+        </a>
+        <p class="footer-tagline">From Indonesia's Waters to Global Markets. Premium Indonesian seafood, export-ready.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="#products">Products</a></li>
+          <li><a href="#why">About</a></li>
+          <li><a href="#supply">Supply Chain</a></li>
+          <li><a href="#sustainability">Sustainability</a></li>
+          <li><a href="#certs">Certifications</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <ul>
+          <li><span style="color:var(--text-muted);">WhatsApp (temporarily unavailable)</span></li>
+          <li><a href="mailto:info@gabungansamuderainternasional.com">Email Export</a></li>
+          <li><a href="#contact">Request Catalog</a></li>
+          </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span class="footer-copy">© 2025 Trader Sam Seafood. Jakarta, Indonesia.</span>
+    </div>
+  </div>
+</footer>
+
+<!-- WhatsApp Float Button -->
+<a href="https://wa.me/62XXXXXXXXXX" id="wa-float" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">
+  <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+</a>
+
+<script>
+// ─── NAVBAR SCROLL ───
+const navbar = document.getElementById('navbar');
+const hamburger = document.getElementById('hamburger');
+const mobileMenu = document.getElementById('mobile-menu');
+
+window.addEventListener('scroll', () => {}, { passive: true });
+
+hamburger.addEventListener('click', () => {
+  hamburger.classList.toggle('open');
+  mobileMenu.classList.toggle('open');
+});
+
+document.querySelectorAll('.mobile-link, .mobile-menu .btn').forEach(link => {
+  link.addEventListener('click', () => {
+    hamburger.classList.remove('open');
+    mobileMenu.classList.remove('open');
+  });
+});
+
+// ─── DROPDOWN: click to open, stays open until click elsewhere ───
+document.querySelectorAll('.nav-dropdown > a').forEach(trigger => {
+  trigger.addEventListener('click', (e) => {
+    e.preventDefault();
+    const parent = trigger.parentElement;
+    const isOpen = parent.classList.contains('open');
+    // close all
+    document.querySelectorAll('.nav-dropdown').forEach(d => d.classList.remove('open'));
+    if (!isOpen) parent.classList.add('open');
+  });
+});
+// close dropdown when clicking outside
+document.addEventListener('click', (e) => {
+  if (!e.target.closest('.nav-dropdown')) {
+    document.querySelectorAll('.nav-dropdown').forEach(d => d.classList.remove('open'));
+  }
+});
+
+// ─── HERO STAT COUNTERS ───
+function animateCounter(el, target, suffix, duration = 2000) {
+  const start = performance.now();
+  const update = (time) => {
+    const elapsed = time - start;
+    const progress = Math.min(elapsed / duration, 1);
+    const ease = 1 - Math.pow(1 - progress, 3);
+    const value = Math.round(ease * target);
+    el.textContent = value + suffix;
+    if (progress < 1) requestAnimationFrame(update);
+  };
+  requestAnimationFrame(update);
+}
+
+document.querySelectorAll('[data-target]').forEach(el => {
+  animateCounter(el, parseInt(el.dataset.target), el.dataset.suffix || '');
+});
+
+// ─── SCROLL REVEAL ───
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      revealObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.12 });
+
+document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+// ─── SUPPLY CHAIN STAGGER ───
+const supplySteps = document.querySelectorAll('.supply-step');
+const supplyObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      supplySteps.forEach((step, i) => {
+        setTimeout(() => step.classList.add('visible'), i * 150);
+      });
+      supplyObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.2 });
+
+if (supplySteps.length) supplyObserver.observe(document.getElementById('supply-timeline'));
+
+// ─── STATS COUNTER (section stats) ───
+const statObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.querySelectorAll('[data-stat]').forEach(el => {
+        animateCounter(el, parseInt(el.dataset.stat), '', 1800);
+      });
+      statObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.3 });
+
+const statsSection = document.getElementById('stats');
+if (statsSection) statObserver.observe(statsSection);
+
+// ─── STEP CAROUSEL ───
+(function() {
+  const CARDS_VISIBLE = 3;
+  const GAP = 20;
+  let currentIndex = 0;
+  let cardWidth = 0;
+  let totalCards = 0;
+  let carouselTimer = null;
+  let paused = false;
+
+  function setupCarousel() {
+    const scroll = document.getElementById('products-scroll');
+    const inner = document.getElementById('products-scroll-inner');
+    if (!scroll || !inner) return;
+    const cards = inner.querySelectorAll('.flip-card');
+    totalCards = cards.length;
+    const containerWidth = scroll.offsetWidth;
+    cardWidth = Math.floor((containerWidth - (CARDS_VISIBLE - 1) * GAP) / CARDS_VISIBLE);
+    cards.forEach(card => {
+      card.style.flexBasis = cardWidth + 'px';
+      card.style.minWidth = cardWidth + 'px';
+    });
+    goToCard(0, false);
+  }
+
+  function goToCard(index, animate) {
+    const inner = document.getElementById('products-scroll-inner');
+    if (!inner) return;
+    if (animate === false) inner.style.transition = 'none';
+    else inner.style.transition = 'transform 0.5s cubic-bezier(0.4,0,0.2,1)';
+    inner.style.transform = 'translateX(-' + (index * (cardWidth + GAP)) + 'px)';
+    currentIndex = index;
+  }
+
+  function nextCard() {
+    if (paused) return;
+    const maxIndex = totalCards - CARDS_VISIBLE;
+    if (currentIndex >= maxIndex) {
+      // jump to end then snap back to start
+      goToCard(maxIndex, true);
+      setTimeout(() => { goToCard(0, false); }, 520);
+    } else {
+      goToCard(currentIndex + 1, true);
+    }
+  }
+
+  // Pause on hover
+  const scrollEl = document.getElementById('products-scroll');
+  if (scrollEl) {
+    scrollEl.addEventListener('mouseenter', () => { paused = true; });
+    scrollEl.addEventListener('mouseleave', () => { paused = false; });
+  }
+
+  // Arrow buttons
+  const prevBtn = document.getElementById('carousel-prev');
+  const nextBtn = document.getElementById('carousel-next');
+  if (prevBtn) prevBtn.addEventListener('click', () => {
+    const maxIndex = totalCards - CARDS_VISIBLE;
+    if (currentIndex <= 0) {
+      goToCard(maxIndex, true);
+    } else {
+      goToCard(currentIndex - 1, true);
+    }
+  });
+  if (nextBtn) nextBtn.addEventListener('click', () => { nextCard(); });
+
+  carouselTimer = setInterval(nextCard, 4000);
+  window.addEventListener('resize', setupCarousel);
+  setupCarousel();
+})();
+
+// ─── FLIP CARDS (touch support) ───
+document.querySelectorAll('.flip-card').forEach(card => {
+  card.addEventListener('click', () => card.classList.toggle('flipped'));
+  card.addEventListener('keydown', e => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      card.classList.toggle('flipped');
+    }
+  });
+});
+
+// ─── NEWS ───
+const articles = [
+  {
+    id: 1, featured: true, tag: 'Press',
+    headline: 'Wantimpres Dukung Peningkatan Ekspor Produk Perikanan',
+    source: 'BeritaSatu.com', date: 'Feb 2020',
+    excerpt: 'Ketua Wantimpres Wiranto mendukung peningkatan ekspor produk perikanan Indonesia saat meresmikan gedung cold storage baru PT Gabungan Samudera Internasional di Muara Angke.',
+    url: 'https://www.beritasatu.com/ekonomi/601947/cahaya-bahari-siapkan-ekspansi-pasar-ekspor', image: 'https://res.cloudinary.com/dytehjyns/image/upload/v1785228834/IMG_2187_xlpbvt.jpg'
+  },
+  {
+    id: 2, featured: true, tag: 'Press',
+    headline: 'Perusahaan Swasta Ekspansi Ekspor di Tengah Wabah Corona',
+    source: 'Antara News', date: 'Feb 2020',
+    excerpt: 'Ekspor ikan perusahaan stabil di tengah krisis — mampu mengekspor minimal 500 ton ikan tiap bulannya. Eksportir cumi terbesar kedua di Indonesia.',
+    url: 'https://www.antaranews.com/berita/1312718/perusahaan-swasta-ekspansi-ekspor-di-tengah-wabah-corona', image: 'https://res.cloudinary.com/dytehjyns/image/upload/v1785228835/IMG_2188_ljbsbi.jpg'
+  }
+];
+
+const tagClass = {
+  'Featured': 'tag-featured', 'Company': 'tag-company',
+  'Founder story': 'tag-founder', 'Industry': 'tag-industry',
+  'Award': 'tag-award', 'Press': 'tag-press'
+};
+
+const bgColors = ['#042C53','#0C447C','#185FA5','#1B2F6E'];
+
+const fishSVG = `<svg width="80" height="50" viewBox="0 0 80 50" fill="none" class="news-fish-wm">
+  <path d="M8 25 C20 8 55 5 72 25 C55 45 20 42 8 25Z" fill="white"/>
+  <circle cx="66" cy="19" r="4" fill="white"/>
+  <path d="M2 16 L10 25 L2 34Z" fill="white"/>
+</svg>`;
+
+const waveSVG = `<svg class="news-img-wave" viewBox="0 0 400 18" preserveAspectRatio="none" style="height:18px;display:block;">
+  <path d="M0,9 C100,0 200,18 300,9 C350,4 380,14 400,9 L400,18 L0,18Z" fill="white" opacity="0.05"/>
+</svg>`;
+
+function buildFeaturedCard(a) {
+  const bg = bgColors[a.id % bgColors.length];
+  const imgHtml = a.image
+    ? `<img src="${a.image}" class="news-card-img-cover" alt="${a.headline}"><div class="news-card-img-overlay"></div>`
+    : `${fishSVG}${waveSVG}`;
+  const excerpt = a.excerpt ? `<div class="news-excerpt">${a.excerpt}</div>` : '';
+  const target = (a.url && a.url !== '#') ? ' target="_blank" rel="noopener"' : '';
+  return `<a href="${a.url || '#'}" class="news-card reveal"${target}>
+    <div class="news-card-img" style="background:${bg}">${imgHtml}</div>
+    <div class="news-card-body">
+      <span class="news-tag ${tagClass[a.tag] || 'tag-press'}">${a.tag}</span>
+      <div class="news-headline">${a.headline}</div>
+      ${excerpt}
+      <div class="news-meta">
+        <span>${a.source}</span><span class="news-meta-dot"></span><span>${a.date}</span>
+      </div>
+    </div>
+  </a>`;
+}
+
+function buildCompactCard(a) {
+  const bg = bgColors[a.id % bgColors.length];
+  const target = (a.url && a.url !== '#') ? ' target="_blank" rel="noopener"' : '';
+  return `<a href="${a.url || '#'}" class="news-compact reveal"${target}>
+    <div class="news-compact-thumb" style="background:${bg}">
+      <svg width="38" height="24" viewBox="0 0 80 50" fill="none" style="opacity:0.18;">
+        <path d="M8 25 C20 8 55 5 72 25 C55 45 20 42 8 25Z" fill="white"/>
+        <circle cx="66" cy="19" r="4" fill="white"/>
+        <path d="M2 16 L10 25 L2 34Z" fill="white"/>
+      </svg>
+    </div>
+    <div class="news-compact-body">
+      <span class="news-tag ${tagClass[a.tag] || 'tag-press'}">${a.tag}</span>
+      <div class="news-compact-headline">${a.headline}</div>
+      <div class="news-meta">
+        <span>${a.source}</span><span class="news-meta-dot"></span><span>${a.date}</span>
+      </div>
+    </div>
+  </a>`;
+}
+
+const featuredEl = document.getElementById('news-featured-row');
+const compactEl = document.getElementById('news-compact-list');
+if (featuredEl && compactEl) {
+  articles.filter(a => a.featured).forEach(a => featuredEl.innerHTML += buildFeaturedCard(a));
+  articles.filter(a => !a.featured).forEach(a => compactEl.innerHTML += buildCompactCard(a));
+  document.querySelectorAll('#news .reveal').forEach(el => revealObserver.observe(el));
+}
+
+// ─── FORM: WHATSAPP SUBMIT ───
+function handleSubmit(e) {
+  e.preventDefault();
+  const name = document.getElementById('name').value;
+  const company = document.getElementById('company').value;
+  const country = document.getElementById('country').value;
+  const email = document.getElementById('email').value;
+  const products = document.getElementById('products-interest') ? document.getElementById('products-interest').value || 'General inquiry' : 'General inquiry';
+
+  const msg = encodeURIComponent(
+    `Hello Trader Sam Seafood,\n\nI'd like to request a product catalog.\n\n` +
+    `Name: ${name}\nCompany: ${company}\nCountry: ${country}\nEmail: ${email}\nProducts of interest: ${products}\n\nThank you.`
+  );
+  window.open(`https://wa.me/62XXXXXXXXXX?text=${msg}`, '_blank');
+}
+
+function handleEmail() {
+  const name = document.getElementById('name').value || '';
+  const company = document.getElementById('company').value || '';
+  const country = document.getElementById('country').value || '';
+  const email = document.getElementById('email').value || '';
+  const products = document.getElementById('products-interest').value || 'General inquiry';
+  const subject = encodeURIComponent('Product Catalog Request — Trader Sam Seafood');
+  const body = encodeURIComponent(`Hello,\n\nName: ${name}\nCompany: ${company}\nCountry: ${country}\nEmail: ${email}\nProducts of interest: ${products}\n\nPlease send me your product catalog.\n\nThank you.`);
+  window.location.href = `mailto:info@gabungansamuderainternasional.com?subject=${subject}&body=${body}`;
+}
+</script>
+</body>
+</html>

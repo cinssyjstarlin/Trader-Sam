@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Who We Are — PT Gabungan Samudera Internasional</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --navy: #1B2F6E; --ocean: #378ADD; --deep: #042C53;
+  --white: #FFFFFF; --light-blue: #E6F1FB; --off-white: #f7f9fc;
+  --text-dark: #1A1A2E; --text-muted: #6B7A99; --border: #e4ecf4;
+}
+html { scroll-behavior: smooth; }
+body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; color: var(--text-dark); background: var(--white); overflow-x: hidden; }
+.container { max-width: 1100px; margin: 0 auto; padding: 0 28px; }
+
+/* NAV */
+#navbar { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: var(--white); box-shadow: 0 1px 0 rgba(0,0,0,0.07); padding: 10px 0; }
+.nav-inner { display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+.nav-logo { display: flex; align-items: center; text-decoration: none; flex-shrink: 0; }
+.nav-logo img { height: 52px; width: auto; display: block; }
+.nav-links { display: flex; align-items: center; gap: 28px; list-style: none; }
+.nav-links a { font-size: 14px; font-weight: 600; color: var(--text-dark); text-decoration: none; transition: color 0.2s; white-space: nowrap; }
+.nav-links a:hover, .nav-links a.active { color: var(--ocean); }
+.nav-cta a { padding: 10px 20px; font-size: 14px; background: var(--navy); color: var(--white); border-radius: 8px; text-decoration: none; font-weight: 600; transition: background 0.2s; display: inline-block; }
+.nav-cta a:hover { background: #142459; }
+.hamburger { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: 8px; min-height: 44px; min-width: 44px; align-items: center; justify-content: center; }
+.hamburger span { display: block; width: 22px; height: 2px; background: var(--navy); border-radius: 2px; transition: 0.3s; }
+.mobile-menu { display: none; position: fixed; top: 72px; left: 0; right: 0; background: var(--white); padding: 20px 28px; flex-direction: column; gap: 14px; box-shadow: 0 8px 32px rgba(0,0,0,0.08); z-index: 999; }
+.mobile-menu.open { display: flex; }
+.mobile-menu a { font-size: 15px; font-weight: 600; color: var(--text-dark); text-decoration: none; padding: 8px 0; border-bottom: 1px solid var(--border); }
+
+/* PAGE HEADER */
+.page-header { background: var(--deep); padding: 130px 0 72px; position: relative; overflow: hidden; }
+.page-header-bg { position: absolute; inset: 0; background: url('https://res.cloudinary.com/dytehjyns/image/upload/v1782801132/IMG_2093_meg9zn.jpg') center/cover no-repeat; opacity: 0.05; }
+.page-header-inner { position: relative; z-index: 2; }
+.eyebrow-tag { font-size: 11px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; color: #5aabff; margin-bottom: 14px; display: block; }
+.page-header h1 { font-size: clamp(28px, 4vw, 50px); font-weight: 900; color: var(--white); line-height: 1.1; margin-bottom: 16px; }
+.page-header p { font-size: 17px; color: rgba(255,255,255,0.55); max-width: 500px; line-height: 1.65; }
+.page-wave { position: absolute; bottom: -2px; left: 0; right: 0; line-height: 0; }
+.page-wave svg { display: block; }
+
+/* SECTIONS */
+.section { padding: 72px 0; }
+.section-alt { background: var(--off-white); }
+.section-dark { background: var(--deep); }
+.eyebrow { font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--ocean); margin-bottom: 10px; display: block; }
+h2 { font-size: clamp(22px, 3vw, 36px); font-weight: 900; line-height: 1.2; color: var(--navy); margin-bottom: 16px; }
+
+/* ORIGIN */
+.story-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
+.story-text p { font-size: 16px; color: var(--text-muted); line-height: 1.8; margin-bottom: 16px; }
+.story-text p:last-child { margin-bottom: 0; }
+.story-img-wrap { position: relative; }
+.story-img-card { background: #0d2744; border-radius: 18px; overflow: hidden; display: flex; flex-direction: column; position: relative; }
+.story-img-card img { width: 100%; height: auto; display: block; object-fit: cover; opacity: 1; }
+.story-img-caption { position: relative; z-index: 2; background: rgba(4,44,83,0.82); backdrop-filter: blur(8px); padding: 16px 20px; width: 100%; }
+.story-img-caption strong { color: var(--white); font-size: 14px; display: block; margin-bottom: 3px; }
+.story-img-caption span { font-size: 12px; color: rgba(255,255,255,0.55); }
+.stat-float { position: absolute; top: -16px; right: -16px; background: var(--navy); border-radius: 14px; padding: 16px 20px; text-align: center; box-shadow: 0 8px 28px rgba(27,47,110,0.28); z-index: 3; }
+.stat-float .n { font-size: 28px; font-weight: 900; color: var(--white); line-height: 1; }
+.stat-float .l { font-size: 10px; color: rgba(255,255,255,0.5); margin-top: 4px; }
+
+/* FOUNDER */
+.founder-grid { display: grid; grid-template-columns: 320px 1fr; gap: 60px; align-items: start; }
+.founder-photo-wrap { position: relative; }
+.founder-photo { width: 100%; border-radius: 18px; overflow: hidden; background: var(--light-blue); }
+.founder-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.founder-photo-ph { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; height: 100%; }
+.founder-photo-ph svg { opacity: 0.25; }
+.founder-photo-ph p { font-size: 12px; color: var(--ocean); font-weight: 600; text-align: center; padding: 0 16px; }
+.founder-tag { position: absolute; bottom: -14px; left: 20px; background: var(--navy); border-radius: 10px; padding: 12px 18px; box-shadow: 0 6px 24px rgba(27,47,110,0.22); }
+.founder-tag strong { font-size: 13px; color: var(--white); display: block; }
+.founder-tag span { font-size: 11px; color: rgba(255,255,255,0.5); }
+.founder-text { padding-top: 4px; }
+.founder-name { font-size: clamp(22px, 2.8vw, 32px); font-weight: 900; color: var(--navy); line-height: 1.1; margin-bottom: 5px; }
+.founder-role { font-size: 14px; font-weight: 600; color: var(--ocean); margin-bottom: 24px; }
+.founder-text p { font-size: 16px; color: var(--text-muted); line-height: 1.8; margin-bottom: 16px; }
+.founder-text p:last-of-type { margin-bottom: 0; }
+.blockquote { border-left: 3px solid var(--ocean); padding: 16px 22px; background: var(--light-blue); border-radius: 0 12px 12px 0; margin: 24px 0; }
+.blockquote p { font-size: 16px; font-style: italic; color: var(--navy); line-height: 1.65; margin: 0; }
+.blockquote cite { display: block; font-size: 12px; color: var(--text-muted); font-style: normal; font-weight: 600; margin-top: 10px; }
+
+/* TIMELINE */
+.timeline { position: relative; margin-top: 48px; padding-bottom: 4px; }
+.timeline::before { content: ''; position: absolute; left: 100px; top: 8px; bottom: 8px; width: 2px; background: linear-gradient(to bottom, var(--ocean), rgba(55,138,221,0.08)); }
+.tl-item { display: flex; gap: 36px; margin-bottom: 36px; align-items: flex-start; }
+.tl-item:last-child { margin-bottom: 0; }
+.tl-year { width: 100px; flex-shrink: 0; text-align: right; font-size: 20px; font-weight: 900; color: var(--navy); padding-top: 2px; }
+.tl-dot { width: 12px; height: 12px; border-radius: 50%; background: var(--ocean); border: 3px solid var(--white); box-shadow: 0 0 0 2px var(--ocean); flex-shrink: 0; margin-top: 5px; z-index: 1; position: relative; }
+.tl-item.current .tl-dot { background: var(--white); border-color: var(--ocean); box-shadow: 0 0 0 2px var(--ocean), 0 0 12px rgba(55,138,221,0.4); }
+.tl-item.current .tl-year { color: var(--ocean); }
+.tl-body h4 { font-size: 15px; font-weight: 800; color: var(--navy); margin-bottom: 5px; }
+.tl-item.current .tl-body h4 { color: var(--ocean); }
+.tl-body p { font-size: 14px; color: var(--text-muted); line-height: 1.65; }
+.tl-now-tag { display: inline-block; font-size: 10px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; background: var(--ocean); color: var(--white); padding: 2px 8px; border-radius: 20px; margin-left: 8px; vertical-align: middle; }
+
+/* CTA */
+.cta-strip { background: var(--navy); padding: 64px 0; text-align: center; }
+.cta-strip h2 { color: var(--white); margin-bottom: 12px; }
+.cta-strip p { color: rgba(255,255,255,0.55); font-size: 16px; max-width: 440px; margin: 0 auto 28px; line-height: 1.65; }
+.cta-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+.btn-solid { background: var(--ocean); color: var(--white); padding: 13px 26px; border-radius: 8px; font-size: 15px; font-weight: 700; text-decoration: none; transition: background 0.2s; }
+.btn-solid:hover { background: #2a6db5; }
+.btn-ghost { border: 2px solid rgba(255,255,255,0.28); color: var(--white); padding: 13px 26px; border-radius: 8px; font-size: 15px; font-weight: 700; text-decoration: none; transition: all 0.2s; }
+.btn-ghost:hover { border-color: var(--white); background: rgba(255,255,255,0.07); }
+
+/* FOOTER */
+footer { background: #021e38; padding: 26px 0; }
+.footer-inner { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+.footer-copy { font-size: 13px; color: rgba(255,255,255,0.32); }
+.footer-links { display: flex; gap: 20px; }
+.footer-links a { font-size: 13px; color: rgba(255,255,255,0.38); text-decoration: none; }
+.footer-links a:hover { color: rgba(255,255,255,0.8); }
+
+/* WA FLOAT */
+#wa-float { position: fixed; bottom: 28px; right: 28px; z-index: 900; width: 54px; height: 54px; border-radius: 50%; background: #25D366; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 20px rgba(37,211,102,0.35); text-decoration: none; transition: transform 0.3s; color: var(--white); }
+#wa-float:hover { transform: scale(1.08); }
+
+/* REVEAL */
+.reveal { opacity: 0; transform: translateY(22px); transition: opacity 0.6s ease, transform 0.6s ease; }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+  .story-grid, .founder-grid { grid-template-columns: 1fr; gap: 40px; }
+  .founder-photo { border-radius: 14px; }
+  .timeline::before { left: 70px; }
+  .tl-year { width: 70px; font-size: 16px; }
+}
+@media (max-width: 640px) {
+  .nav-links, .nav-cta { display: none; }
+  .hamburger { display: flex; }
+  .section { padding: 52px 0; }
+  .stat-float { position: static; display: inline-block; margin-top: 14px; }
+}
+</style>
+</head>
+<body>
+
+<nav id="navbar">
+  <div class="container">
+    <div class="nav-inner">
+      <a href="index_v2.html" class="nav-logo">
+        <img src="https://res.cloudinary.com/dytehjyns/image/upload/v1782801132/IMG_2093_meg9zn.jpg" alt="Trader Sam Seafood">
+      </a>
+      <ul class="nav-links">
+        <li><a href="index_v2.html">Home</a></li>
+        <li><a href="products.html">Products</a></li>
+        <li><a href="about.html" class="active">About Us</a></li>
+        <li><a href="index_v2.html#sustainability">Sustainability</a></li>
+        <li><a href="index_v2.html#contact">Contact</a></li>
+      </ul>
+      <div class="nav-cta"><a href="index_v2.html#contact">Request Catalog</a></div>
+      <button class="hamburger" id="hamburger" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<div class="mobile-menu" id="mobile-menu">
+  <a href="index_v2.html">Home</a>
+  <a href="products.html">Products</a>
+  <a href="about.html">About Us</a>
+  <a href="index_v2.html#sustainability">Sustainability</a>
+  <a href="index_v2.html#contact">Contact</a>
+</div>
+
+<!-- HEADER -->
+<header class="page-header">
+  <div class="page-header-bg"></div>
+  <div class="container page-header-inner">
+    <span class="eyebrow-tag">About Us</span>
+    <h1>Who We Are</h1>
+    <p>PT Gabungan Samudera Internasional has been sourcing, processing, and exporting premium Indonesian seafood since 2014.</p>
+  </div>
+  <div class="page-wave">
+    <svg viewBox="0 0 1440 60" preserveAspectRatio="none" style="height:60px;">
+      <path d="M0,30 C360,60 720,0 1080,30 C1260,45 1380,36 1440,30 L1440,60 L0,60 Z" fill="#ffffff"/>
+    </svg>
+  </div>
+</header>
+
+<!-- ORIGIN -->
+<section class="section">
+  <div class="container">
+    <div class="story-grid">
+      <div class="story-text reveal">
+        <span class="eyebrow">Where it began</span>
+        <h2>Founded at Muara Angke, 2014</h2>
+        <p>PT Gabungan Samudera Internasional was founded in 2014 at Muara Angke — Jakarta's oldest working fishing port. The idea was straightforward: <strong style="color:var(--navy);">Indonesia has some of the richest waters on earth, and the world deserved better access to what those waters produce.</strong></p>
+        <p>The archipelago spans over 17,000 islands with year-round species diversity. Yet for decades, much of that supply never reached international buyers in a form they could rely on — consistent quality, proper cold chain, documented compliance. That gap is what this company was built to close.</p>
+        <p>Starting with a single cold storage unit and a core group of fishermen partners, we grew into a trusted mid-scale exporter — shipping to 23 countries across Asia, the Middle East, and Oceania.</p>
+      </div>
+      <div class="story-img-wrap reveal">
+        <div class="story-img-card">
+          <img src="https://res.cloudinary.com/dytehjyns/image/upload/v1785320200/IMG_2195_uvbgb1.jpg" alt="Muara Angke fishing port">
+          <div class="story-img-caption">
+            <strong>Muara Angke Fishing Port, Jakarta Utara</strong>
+            <span>Headquarters and export base since 2014</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOUNDER -->
+<section class="section section-alt" id="founder">
+  <div class="container">
+    <div class="founder-grid">
+      <div class="founder-photo-wrap reveal">
+        <div class="founder-photo">
+          <img src="https://res.cloudinary.com/dytehjyns/image/upload/v1785320201/IMG_2196_dpfze6.png" alt="Then Herry Yulianto — Founder & CEO" style="width:100%;height:auto;display:block;">
+        </div>
+        <div class="founder-tag">
+          <strong>Then Herry Yulianto</strong>
+          <span>Founder &amp; CEO</span>
+        </div>
+      </div>
+
+      <div class="founder-text reveal">
+        <span class="eyebrow">Leadership</span>
+        <div class="founder-name">Then Herry Yulianto</div>
+        <div class="founder-role">Founder &amp; CEO — PT Gabungan Samudera Internasional</div>
+
+        <p>Mr. Herry Then grew up around Indonesia's coastal fishing communities, which gave him an early and practical understanding of the industry — the logistics, the informal networks, and the gap between what Indonesian waters produce and what actually reaches international markets in a reliable form.</p>
+
+        <p>In 2014, he founded PT Gabungan Samudera Internasional at Muara Angke with a clear mandate: build an export operation that international buyers could depend on. That meant investing in cold storage infrastructure before it was comfortable, obtaining HACCP, GMP, and Halal certifications that meet the requirements of Japan, South Korea, and the Middle East, and building direct relationships with fishermen rather than relying on intermediaries.</p>
+
+        <div class="blockquote">
+          <p>"Indonesia is the largest maritime nation in Southeast Asia. The potential is enormous — but potential alone doesn't create value. What creates value is discipline, standards, and long-term relationships."</p>
+          <cite>— Then Herry Yulianto, 2020</cite>
+        </div>
+
+        <p>Under his leadership, the company became <strong style="color:var(--navy);">one of Indonesia's largest squid exporters by 2018.</strong> When COVID-19 disrupted global supply chains in 2020, PT Gabungan Samudera Internasional maintained exports above 500 tonnes per month — because the systems had been built correctly in advance. The company now exports to 23 countries across Asia, the Middle East, and Oceania.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TIMELINE -->
+<section class="section">
+  <div class="container">
+    <div class="reveal" style="max-width:520px; margin-bottom:0;">
+      <span class="eyebrow">Track record</span>
+      <h2>Ten Years of Progress</h2>
+    </div>
+    <div class="timeline">
+      <div class="tl-item reveal">
+        <div class="tl-year">2014</div>
+        <div class="tl-dot"></div>
+        <div class="tl-body">
+          <h4>Founded at Muara Angke</h4>
+          <p>Export operations begin. First cold storage unit commissioned. Initial focus on squid and demersal species to regional markets.</p>
+        </div>
+      </div>
+      <div class="tl-item reveal">
+        <div class="tl-year">2016</div>
+        <div class="tl-dot"></div>
+        <div class="tl-body">
+          <h4>International certifications achieved</h4>
+          <p>HACCP, GMP, and Halal certifications obtained — opening access to Japanese, South Korean, and Middle Eastern buyers with strict import compliance requirements.</p>
+        </div>
+      </div>
+      <div class="tl-item reveal">
+        <div class="tl-year">2018</div>
+        <div class="tl-dot"></div>
+        <div class="tl-body">
+          <h4>Indonesia's 2nd largest squid exporter</h4>
+          <p>Consistent supply chain management and growing fishermen networks establish the company as one of Indonesia's leading cephalopod exporters.</p>
+        </div>
+      </div>
+      <div class="tl-item reveal">
+        <div class="tl-year">2020</div>
+        <div class="tl-dot"></div>
+        <div class="tl-body">
+          <h4>New cold storage — stable through COVID-19</h4>
+          <p>Expanded processing capacity commissioned. Despite global disruptions, the company maintains 500+ tonnes monthly exports — a milestone noted at the facility inauguration by government officials.</p>
+        </div>
+      </div>
+      <div class="tl-item reveal">
+        <div class="tl-year">2024</div>
+        <div class="tl-dot"></div>
+        <div class="tl-body">
+          <h4>Strategic partnership with Perum BULOG</h4>
+          <p>A formal supply collaboration with Indonesia's national food logistics agency formalizes the company's role in the national seafood supply chain.</p>
+        </div>
+      </div>
+      <div class="tl-item current reveal">
+        <div class="tl-year">2026 <span class="tl-now-tag">Now</span></div>
+        <div class="tl-dot"></div>
+        <div class="tl-body">
+          <h4>Expanding product range and export reach</h4>
+          <p>Active export operations across 23 countries. FDA registration current. Ongoing development of processed and value-added product lines for European and Gulf markets.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-strip">
+  <div class="container">
+    <h2>Ready to place an order?</h2>
+    <p>Whether you're an importer, distributor, or food service operator — we'd welcome the conversation.</p>
+    <div class="cta-btns">
+      <a href="index_v2.html#contact" class="btn-solid">Request a Catalog</a>
+      <a href="products.html" class="btn-ghost">View Our Products</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <span class="footer-copy">© 2025 PT Gabungan Samudera Internasional · Jakarta, Indonesia.</span>
+      <div class="footer-links">
+        <a href="index_v2.html">Home</a>
+        <a href="products.html">Products</a>
+        <a href="index_v2.html#contact">Contact</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<a href="https://wa.me/62XXXXXXXXXX" id="wa-float" target="_blank" rel="noopener" aria-label="WhatsApp">
+  <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+</a>
+
+<script>
+document.getElementById('hamburger').addEventListener('click', () => {
+  document.getElementById('mobile-menu').classList.toggle('open');
+});
+document.querySelectorAll('.mobile-menu a').forEach(a => {
+  a.addEventListener('click', () => document.getElementById('mobile-menu').classList.remove('open'));
+});
+const ro = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); ro.unobserve(e.target); } });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => ro.observe(el));
+</script>
+</body>
+</html>

@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fresh & Frozen Seafood — Trader Sam Seafood</title>
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --navy: #1B2F6E; --ocean: #378ADD; --deep: #042C53;
+    --white: #FFFFFF; --light-blue: #E6F1FB;
+    --text-dark: #1A1A2E; --text-muted: #6B7A99;
+  }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; color: var(--text-dark); background: #f7f9fc; overflow-x: hidden; }
+  .container { max-width: 1280px; margin: 0 auto; padding: 0 24px; }
+
+  /* NAV */
+  #navbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+    background: var(--white); box-shadow: 0 2px 20px rgba(0,0,0,0.08); padding: 10px 0;
+  }
+  .nav-inner { display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+  .nav-logo { display: flex; align-items: center; text-decoration: none; flex-shrink: 0; }
+  .nav-logo img { height: 52px; width: auto; display: block; }
+  .nav-links { display: flex; align-items: center; gap: 32px; list-style: none; }
+  .nav-links a { font-size: 14px; font-weight: 600; color: var(--text-dark); text-decoration: none; transition: color 0.3s; white-space: nowrap; }
+  .nav-links a:hover { color: var(--ocean); }
+  .nav-cta .btn { padding: 10px 20px; font-size: 14px; background: var(--navy); border: 2px solid var(--navy); color: var(--white); border-radius: 8px; text-decoration: none; font-weight: 600; transition: background 0.2s; }
+  .nav-cta .btn:hover { background: #142459; }
+  .nav-dropdown { position: relative; }
+  .nav-dropdown > a::after { content: ' ▾'; font-size: 10px; opacity: 0.6; }
+  .nav-dropdown-menu {
+    position: absolute; top: calc(100% + 12px); left: 50%; transform: translateX(-50%) translateY(6px);
+    min-width: 210px; background: var(--white); border-radius: 10px;
+    box-shadow: 0 8px 32px rgba(27,47,110,0.14); padding: 6px 0;
+    opacity: 0; pointer-events: none; transition: opacity 0.18s ease, transform 0.18s ease; z-index: 200;
+  }
+  .nav-dropdown.open .nav-dropdown-menu,
+  .nav-dropdown:hover .nav-dropdown-menu {
+    opacity: 1; pointer-events: auto; transform: translateX(-50%) translateY(0);
+  }
+  .nav-dropdown-menu a { display: block; padding: 10px 20px; font-size: 14px; font-weight: 500; color: var(--text-dark); text-decoration: none; transition: background 0.15s, color 0.15s; }
+  .nav-dropdown-menu a:hover { background: var(--light-blue); color: var(--ocean); }
+  .hamburger { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: 8px; min-height: 44px; min-width: 44px; align-items: center; justify-content: center; }
+  .hamburger span { display: block; width: 24px; height: 2px; background: var(--navy); transition: 0.3s ease; border-radius: 2px; }
+
+  /* PAGE HEADER */
+  .page-header {
+    background: var(--deep); padding: 120px 0 60px; position: relative; overflow: hidden;
+  }
+  .page-header::after {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(160deg, rgba(4,44,83,0.9) 0%, rgba(27,47,110,0.5) 100%);
+  }
+  .page-header-inner { position: relative; z-index: 2; }
+  .page-header p { font-size: 12px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--ocean); margin-bottom: 12px; }
+  .page-header h1 { font-size: clamp(28px, 4vw, 48px); font-weight: 900; color: var(--white); line-height: 1.15; margin-bottom: 14px; }
+  .page-header span { font-size: 16px; color: rgba(255,255,255,0.65); }
+  .page-header-wave { position: absolute; bottom: -2px; left: 0; right: 0; z-index: 3; line-height: 0; }
+  .page-header-wave svg { display: block; }
+
+  /* FILTER BAR */
+  .filter-bar { padding: 32px 0 8px; display: flex; gap: 10px; flex-wrap: wrap; }
+  .filter-btn {
+    padding: 8px 18px; border-radius: 100px; font-size: 13px; font-weight: 600;
+    border: 1.5px solid #d0dae8; background: var(--white); color: var(--text-muted);
+    cursor: pointer; transition: all 0.2s;
+  }
+  .filter-btn:hover, .filter-btn.active { background: var(--navy); color: var(--white); border-color: var(--navy); }
+
+  /* GRID */
+  .products-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px; padding: 24px 0 80px;
+  }
+  .prod-card {
+    background: var(--white); border-radius: 16px;
+    border: 1.5px solid #e4ecf4;
+    overflow: hidden; display: flex; flex-direction: column;
+    transition: transform 0.22s, box-shadow 0.22s;
+  }
+  .prod-card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(27,47,110,0.12); }
+  .prod-img-wrap {
+    width: 100%; aspect-ratio: 3/2;
+    background: var(--white); display: flex; align-items: center; justify-content: center;
+    padding: 16px; border-bottom: 1px solid #edf2f8;
+  }
+  .prod-img-wrap img { width: 100%; height: 100%; object-fit: contain; display: block; }
+  .prod-info { padding: 18px 20px; display: flex; flex-direction: column; gap: 8px; flex: 1; }
+  .prod-name { font-size: 16px; font-weight: 800; color: var(--navy); }
+  .prod-type { font-size: 12px; color: var(--text-muted); font-weight: 500; }
+  .prod-specs {
+    display: flex; flex-wrap: wrap; gap: 4px; margin: 4px 0;
+  }
+  .prod-specs span {
+    font-size: 10px; background: var(--light-blue); color: #185FA5;
+    padding: 2px 8px; border-radius: 20px; font-weight: 600;
+  }
+  .prod-quote {
+    margin-top: auto; padding-top: 10px;
+    font-size: 13px; font-weight: 700; color: var(--ocean);
+    text-decoration: none; display: inline-block;
+    transition: color 0.2s;
+  }
+  .prod-quote:hover { color: var(--navy); }
+
+  /* CTA BOTTOM */
+  .catalog-cta {
+    background: var(--deep); padding: 64px 0; text-align: center;
+  }
+  .catalog-cta h2 { font-size: clamp(24px,3vw,36px); font-weight: 900; color: var(--white); margin-bottom: 14px; }
+  .catalog-cta p { font-size: 16px; color: rgba(255,255,255,0.65); margin-bottom: 32px; max-width: 480px; margin-left: auto; margin-right: auto; }
+  .btn-catalog {
+    display: inline-flex; align-items: center; gap: 10px;
+    background: var(--ocean); color: var(--white);
+    padding: 16px 36px; border-radius: 10px; font-size: 16px; font-weight: 700;
+    text-decoration: none; border: 2px solid var(--ocean); transition: all 0.2s;
+  }
+  .btn-catalog:hover { background: #2a6db5; border-color: #2a6db5; }
+
+  /* FOOTER */
+  footer { background: #021e38; padding: 32px 0; }
+  .footer-bottom { text-align: center; font-size: 13px; color: rgba(255,255,255,0.4); }
+
+  /* WHATSAPP FLOAT */
+  #wa-float {
+    position: fixed; bottom: 28px; right: 28px; z-index: 900;
+    width: 56px; height: 56px; border-radius: 50%; background: #25D366;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 4px 24px rgba(37,211,102,0.4); text-decoration: none;
+    transition: transform 0.3s; color: var(--white);
+  }
+  #wa-float:hover { transform: scale(1.1); }
+
+  @media (max-width: 768px) {
+    .nav-links, .nav-cta { display: none; }
+    .hamburger { display: flex; }
+    .products-grid { grid-template-columns: repeat(2, 1fr); gap: 16px; }
+  }
+  @media (max-width: 480px) {
+    .products-grid { grid-template-columns: 1fr; gap: 14px; }
+  }
+</style>
+</head>
+<body>
+
+<nav id="navbar">
+  <div class="container">
+    <div class="nav-inner">
+      <a href="index_v2.html#hero" class="nav-logo">
+        <img src="https://res.cloudinary.com/dytehjyns/image/upload/v1782801132/IMG_2093_meg9zn.jpg" alt="Trader Sam Seafood">
+      </a>
+      <ul class="nav-links">
+        <li><a href="products.html">Products</a></li>
+        <li><a href="index_v2.html#why">About Us</a></li>
+        <li><a href="index_v2.html#sustainability">Sustainability</a></li>
+        <li><a href="index_v2.html#contact">Contact</a></li>
+      </ul>
+      <div class="nav-cta"><a href="index_v2.html#contact" class="btn">Request Catalog</a></div>
+      <button class="hamburger" id="hamburger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<header class="page-header">
+  <div class="container page-header-inner">
+    <p>Fresh &amp; Frozen Seafood</p>
+    <h1>Our Product Catalog</h1>
+    <span>Wild-caught from Indonesia's archipelago · Export-ready</span>
+  </div>
+  <div class="page-header-wave">
+    <svg viewBox="0 0 1440 60" preserveAspectRatio="none" style="height:60px;">
+      <path d="M0,30 C360,60 720,0 1080,30 C1260,45 1380,36 1440,30 L1440,60 L0,60 Z" fill="#f7f9fc"/>
+    </svg>
+  </div>
+</header>
+
+<main>
+  <div class="container">
+    <div class="products-grid">
+        <div class="prod-card">
+          <div class="prod-img-wrap">
+            <img src="https://gabungansamuderainternasional.com/wp-content/uploads/2021/04/1.jpg" alt="Croaker" loading="lazy">
+          </div>
+          <div class="prod-info">
+            <div class="prod-name">Croaker</div>
+            <a href="index_v2.html#contact" class="prod-quote">Request Quote →</a>
+          </div>
+        </div>
+        <div class="prod-card">
+          <div class="prod-img-wrap">
+            <img src="https://gabungansamuderainternasional.com/wp-content/uploads/2021/04/2-1.jpg" alt="Dory Fish" loading="lazy">
+          </div>
+          <div class="prod-info">
+            <div class="prod-name">Dory Fish</div>
+            <a href="index_v2.html#contact" class="prod-quote">Request Quote →</a>
+          </div>
+        </div>
+        <div class="prod-card">
+          <div class="prod-img-wrap">
+            <img src="https://gabungansamuderainternasional.com/wp-content/uploads/2021/04/3-1.jpg" alt="Small Toothed Emperor" loading="lazy">
+          </div>
+          <div class="prod-info">
+            <div class="prod-name">Small Toothed Emperor</div>
+            <a href="index_v2.html#contact" class="prod-quote">Request Quote →</a>
+          </div>
+        </div>
+        <div class="prod-card">
+          <div class="prod-img-wrap">
+            <img src="https://gabungansamuderainternasional.com/wp-content/uploads/2021/04/4-1.jpg" alt="Red Snapper" loading="lazy">
+          </div>
+          <div class="prod-info">
+            <div class="prod-name">Red Snapper</div>
+            <a href="index_v2.html#contact" class="prod-quote">Request Quote →</a>
+          </div>
+        </div>
+        <div class="prod-card">
+          <div class="prod-img-wrap">
+            <img src="https://gabungansamuderainternasional.com/wp-content/uploads/2021/04/5-1.jpg" alt="Barramundi Breams" loading="lazy">
+          </div>
+          <div class="prod-info">
+            <div class="prod-name">Barramundi Breams</div>
+            <a href="index_v2.html#contact" class="prod-quote">Request Quote →</a>
+          </div>
+        </div>
+        <div class="prod-card">
+          <div class="prod-img-wrap">
+            <img src="https://gabungansamuderainternasional.com/wp-content/uploads/2021/04/6-1.jpg" alt="Yellowtail Fish" loading="lazy">
+          </div>
+          <div class="prod-info">
+            <div class="prod-name">Yellowtail Fish</div>
+            <a href="index_v2.html#contact" class="prod-quote">Request Quote →</a>
+          </div>
+        </div>
+        <div class="prod-card">
+          <div class="prod-img-wrap">
+            <img src="https://gabungansamuderainternasional.com/wp-content/uploads/2021/04/7-1.jpg" alt="Great Barracuda" loading="lazy">
+          </div>
+          <div class="prod-info">
+            <div class="prod-name">Great Barracuda</div>
+            <a href="index_v2.html#contact" class="prod-quote">Request Quote →</a>
+          </div>
+        </div>
+        <div class="prod-card">
+          <div class="prod-img-wrap">
+            <img src="https://gabungansamuderainternasional.com/wp-content/uploads/2021/04/8-1.jpg" alt="Deep Leatherski" loading="lazy">
+          </div>
+          <div class="prod-info">
+            <div class="prod-name">Deep Leatherski</div>
+            <a href="index_v2.html#contact" class="prod-quote">Request Quote →</a>
+          </div>
+        </div>
+        <div class="prod-card">
+          <div class="prod-img-wrap">
+            <img src="https://gabungansamuderainternasional.com/wp-content/uploads/2021/04/9-1.jpg" alt="Marine Catfish" loading="lazy">
+          </div>
+          <div class="prod-info">
+            <div class="prod-name">Marine Catfish</div>
+            <a href="index_v2.html#contact" class="prod-quote">Request Quote →</a>
+          </div>
+        </div>
+        <div class="prod-card">
+          <div class="prod-img-wrap">
+            <img src="https://gabungansamuderainternasional.com/wp-content/uploads/2021/04/10.jpg" alt="Easter Little Tunas" loading="lazy">
+          </div>
+          <div class="prod-info">
+            <div class="prod-name">Easter Little Tunas</div>
+            <a href="index_v2.html#contact" class="prod-quote">Request Quote →</a>
+          </div>
+        </div>
+        <div class="prod-card">
+          <div class="prod-img-wrap">
+            <img src="https://gabungansamuderainternasional.com/wp-content/uploads/2021/04/11.jpg" alt="Chub Mackerel" loading="lazy">
+          </div>
+          <div class="prod-info">
+            <div class="prod-name">Chub Mackerel</div>
+            <a href="index_v2.html#contact" class="prod-quote">Request Quote →</a>
+          </div>
+        </div>
+        <div class="prod-card">
+          <div class="prod-img-wrap">
+            <img src="https://gabungansamuderainternasional.com/wp-content/uploads/2021/04/12-1.jpg" alt="Frozen Squid" loading="lazy">
+          </div>
+          <div class="prod-info">
+            <div class="prod-name">Frozen Squid</div>
+            <a href="index_v2.html#contact" class="prod-quote">Request Quote →</a>
+          </div>
+        </div>
+        <div class="prod-card">
+          <div class="prod-img-wrap">
+            <img src="https://gabungansamuderainternasional.com/wp-content/uploads/2021/04/13-1.jpg" alt="Gourami" loading="lazy">
+          </div>
+          <div class="prod-info">
+            <div class="prod-name">Gourami</div>
+            <a href="index_v2.html#contact" class="prod-quote">Request Quote →</a>
+          </div>
+        </div>
+        <div class="prod-card">
+          <div class="prod-img-wrap">
+            <img src="https://gabungansamuderainternasional.com/wp-content/uploads/2021/04/14-1.jpg" alt="Nila Tilapia" loading="lazy">
+          </div>
+          <div class="prod-info">
+            <div class="prod-name">Nila Tilapia</div>
+            <a href="index_v2.html#contact" class="prod-quote">Request Quote →</a>
+          </div>
+        </div>
+        <div class="prod-card">
+          <div class="prod-img-wrap">
+            <img src="https://gabungansamuderainternasional.com/wp-content/uploads/2021/04/15.jpg" alt="Indo Pacific Mackerel" loading="lazy">
+          </div>
+          <div class="prod-info">
+            <div class="prod-name">Indo Pacific Mackerel</div>
+            <a href="index_v2.html#contact" class="prod-quote">Request Quote →</a>
+          </div>
+        </div>
+        <div class="prod-card">
+          <div class="prod-img-wrap">
+            <img src="https://gabungansamuderainternasional.com/wp-content/uploads/2021/04/16.jpg" alt="Indo Pacific Mackerel" loading="lazy">
+          </div>
+          <div class="prod-info">
+            <div class="prod-name">Indo Pacific Mackerel</div>
+            <a href="index_v2.html#contact" class="prod-quote">Request Quote →</a>
+          </div>
+        </div>
+        <div class="prod-card">
+          <div class="prod-img-wrap">
+            <img src="https://gabungansamuderainternasional.com/wp-content/uploads/2021/04/17.jpg" alt="Bali Sardinella" loading="lazy">
+          </div>
+          <div class="prod-info">
+            <div class="prod-name">Bali Sardinella</div>
+            <a href="index_v2.html#contact" class="prod-quote">Request Quote →</a>
+          </div>
+        </div>
+        <div class="prod-card">
+          <div class="prod-img-wrap">
+            <img src="https://gabungansamuderainternasional.com/wp-content/uploads/2021/04/18.jpg" alt="Sardines" loading="lazy">
+          </div>
+          <div class="prod-info">
+            <div class="prod-name">Sardines</div>
+            <a href="index_v2.html#contact" class="prod-quote">Request Quote →</a>
+          </div>
+        </div>
+        <div class="prod-card">
+          <div class="prod-img-wrap">
+            <img src="https://gabungansamuderainternasional.com/wp-content/uploads/2021/04/19.jpg" alt="Silver Pomfret" loading="lazy">
+          </div>
+          <div class="prod-info">
+            <div class="prod-name">Silver Pomfret</div>
+            <a href="index_v2.html#contact" class="prod-quote">Request Quote →</a>
+          </div>
+        </div>
+        <div class="prod-card">
+          <div class="prod-img-wrap">
+            <img src="https://gabungansamuderainternasional.com/wp-content/uploads/2021/04/20.jpg" alt="Black Pomfret" loading="lazy">
+          </div>
+          <div class="prod-info">
+            <div class="prod-name">Black Pomfret</div>
+            <a href="index_v2.html#contact" class="prod-quote">Request Quote →</a>
+          </div>
+        </div>
+        <div class="prod-card">
+          <div class="prod-img-wrap">
+            <img src="https://gabungansamuderainternasional.com/wp-content/uploads/2021/04/21.jpg" alt="Goldbanded Fusilier" loading="lazy">
+          </div>
+          <div class="prod-info">
+            <div class="prod-name">Goldbanded Fusilier</div>
+            <a href="index_v2.html#contact" class="prod-quote">Request Quote →</a>
+          </div>
+        </div>
+        <div class="prod-card">
+          <div class="prod-img-wrap">
+            <img src="https://gabungansamuderainternasional.com/wp-content/uploads/2021/04/22.jpg" alt="Yellowstripe Trevally" loading="lazy">
+          </div>
+          <div class="prod-info">
+            <div class="prod-name">Yellowstripe Trevally</div>
+            <a href="index_v2.html#contact" class="prod-quote">Request Quote →</a>
+          </div>
+        </div>
+        <div class="prod-card">
+          <div class="prod-img-wrap">
+            <img src="https://gabungansamuderainternasional.com/wp-content/uploads/2021/04/23.jpg" alt="Giant Threadfish" loading="lazy">
+          </div>
+          <div class="prod-info">
+            <div class="prod-name">Giant Threadfish</div>
+            <a href="index_v2.html#contact" class="prod-quote">Request Quote →</a>
+          </div>
+        </div>
+        <div class="prod-card">
+          <div class="prod-img-wrap">
+            <img src="https://gabungansamuderainternasional.com/wp-content/uploads/2021/04/24.jpg" alt="Bigeye Scad" loading="lazy">
+          </div>
+          <div class="prod-info">
+            <div class="prod-name">Bigeye Scad</div>
+            <a href="index_v2.html#contact" class="prod-quote">Request Quote →</a>
+          </div>
+        </div>
+        <div class="prod-card">
+          <div class="prod-img-wrap">
+            <img src="https://gabungansamuderainternasional.com/wp-content/uploads/2021/04/25.jpg" alt="Leopard Coral Trout" loading="lazy">
+          </div>
+          <div class="prod-info">
+            <div class="prod-name">Leopard Coral Trout</div>
+            <a href="index_v2.html#contact" class="prod-quote">Request Quote →</a>
+          </div>
+        </div>
+        <div class="prod-card">
+          <div class="prod-img-wrap">
+            <img src="https://gabungansamuderainternasional.com/wp-content/uploads/2021/04/26.jpg" alt="Barred Cheek Coral Trout" loading="lazy">
+          </div>
+          <div class="prod-info">
+            <div class="prod-name">Barred Cheek Coral Trout</div>
+            <a href="index_v2.html#contact" class="prod-quote">Request Quote →</a>
+          </div>
+        </div>
+        <div class="prod-card">
+          <div class="prod-img-wrap">
+            <img src="https://gabungansamuderainternasional.com/wp-content/uploads/2021/04/27.jpg" alt="Salmon" loading="lazy">
+          </div>
+          <div class="prod-info">
+            <div class="prod-name">Salmon</div>
+            <a href="index_v2.html#contact" class="prod-quote">Request Quote →</a>
+          </div>
+        </div>
+        <div class="prod-card">
+          <div class="prod-img-wrap">
+            <img src="https://gabungansamuderainternasional.com/wp-content/uploads/2021/04/28.jpg" alt="Yellow Pike-Conger" loading="lazy">
+          </div>
+          <div class="prod-info">
+            <div class="prod-name">Yellow Pike-Conger</div>
+            <a href="index_v2.html#contact" class="prod-quote">Request Quote →</a>
+          </div>
+        </div>
+        <div class="prod-card">
+          <div class="prod-img-wrap">
+            <img src="https://gabungansamuderainternasional.com/wp-content/uploads/2021/04/29.jpg" alt="Spanish Mackerel" loading="lazy">
+          </div>
+          <div class="prod-info">
+            <div class="prod-name">Spanish Mackerel</div>
+            <a href="index_v2.html#contact" class="prod-quote">Request Quote →</a>
+          </div>
+        </div>
+        <div class="prod-card">
+          <div class="prod-img-wrap">
+            <img src="https://gabungansamuderainternasional.com/wp-content/uploads/2021/04/30.jpg" alt="Hairtail" loading="lazy">
+          </div>
+          <div class="prod-info">
+            <div class="prod-name">Hairtail</div>
+            <a href="index_v2.html#contact" class="prod-quote">Request Quote →</a>
+          </div>
+        </div>
+        <div class="prod-card">
+          <div class="prod-img-wrap">
+            <img src="https://gabungansamuderainternasional.com/wp-content/uploads/2021/04/31.jpg" alt="Frozen Squid" loading="lazy">
+          </div>
+          <div class="prod-info">
+            <div class="prod-name">Frozen Squid</div>
+            <a href="index_v2.html#contact" class="prod-quote">Request Quote →</a>
+          </div>
+        </div>
+        <div class="prod-card">
+          <div class="prod-img-wrap">
+            <img src="https://gabungansamuderainternasional.com/wp-content/uploads/2021/04/32.jpg" alt="Cuttlefish" loading="lazy">
+          </div>
+          <div class="prod-info">
+            <div class="prod-name">Cuttlefish</div>
+            <a href="index_v2.html#contact" class="prod-quote">Request Quote →</a>
+          </div>
+        </div>
+        <div class="prod-card">
+          <div class="prod-img-wrap">
+            <img src="https://gabungansamuderainternasional.com/wp-content/uploads/2021/04/33.jpg" alt="Ark Cockle Shell" loading="lazy">
+          </div>
+          <div class="prod-info">
+            <div class="prod-name">Ark Cockle Shell</div>
+            <a href="index_v2.html#contact" class="prod-quote">Request Quote →</a>
+          </div>
+        </div>
+        <div class="prod-card">
+          <div class="prod-img-wrap">
+            <img src="https://gabungansamuderainternasional.com/wp-content/uploads/2021/04/34.jpg" alt="Shrimp" loading="lazy">
+          </div>
+          <div class="prod-info">
+            <div class="prod-name">Shrimp</div>
+            <a href="index_v2.html#contact" class="prod-quote">Request Quote →</a>
+          </div>
+        </div>
+        <div class="prod-card">
+          <div class="prod-img-wrap">
+            <img src="https://gabungansamuderainternasional.com/wp-content/uploads/2021/04/35.jpg" alt="Window Shell" loading="lazy">
+          </div>
+          <div class="prod-info">
+            <div class="prod-name">Window Shell</div>
+            <a href="index_v2.html#contact" class="prod-quote">Request Quote →</a>
+          </div>
+        </div>
+        <div class="prod-card">
+          <div class="prod-img-wrap">
+            <img src="https://gabungansamuderainternasional.com/wp-content/uploads/2021/04/36.jpg" alt="Baby Clam" loading="lazy">
+          </div>
+          <div class="prod-info">
+            <div class="prod-name">Baby Clam</div>
+            <a href="index_v2.html#contact" class="prod-quote">Request Quote →</a>
+          </div>
+        </div>
+        <div class="prod-card">
+          <div class="prod-img-wrap">
+            <img src="https://gabungansamuderainternasional.com/wp-content/uploads/2021/04/37.jpg" alt="Parrot Fish" loading="lazy">
+          </div>
+          <div class="prod-info">
+            <div class="prod-name">Parrot Fish</div>
+            <a href="index_v2.html#contact" class="prod-quote">Request Quote →</a>
+          </div>
+        </div>
+        <div class="prod-card">
+          <div class="prod-img-wrap">
+            <img src="https://gabungansamuderainternasional.com/wp-content/uploads/2021/04/38.jpg" alt="Skipjack Tuna" loading="lazy">
+          </div>
+          <div class="prod-info">
+            <div class="prod-name">Skipjack Tuna</div>
+            <a href="index_v2.html#contact" class="prod-quote">Request Quote →</a>
+          </div>
+        </div>
+        <div class="prod-card">
+          <div class="prod-img-wrap">
+            <img src="https://gabungansamuderainternasional.com/wp-content/uploads/2021/04/39.jpg" alt="Mahi Mahi" loading="lazy">
+          </div>
+          <div class="prod-info">
+            <div class="prod-name">Mahi Mahi</div>
+            <a href="index_v2.html#contact" class="prod-quote">Request Quote →</a>
+          </div>
+        </div>
+        <div class="prod-card">
+          <div class="prod-img-wrap">
+            <img src="https://gabungansamuderainternasional.com/wp-content/uploads/2021/04/40.jpg" alt="Rabbit Fish" loading="lazy">
+          </div>
+          <div class="prod-info">
+            <div class="prod-name">Rabbit Fish</div>
+            <a href="index_v2.html#contact" class="prod-quote">Request Quote →</a>
+          </div>
+        </div>
+        <div class="prod-card">
+          <div class="prod-img-wrap">
+            <img src="https://gabungansamuderainternasional.com/wp-content/uploads/2021/04/41.jpg" alt="Golden Jack" loading="lazy">
+          </div>
+          <div class="prod-info">
+            <div class="prod-name">Golden Jack</div>
+            <a href="index_v2.html#contact" class="prod-quote">Request Quote →</a>
+          </div>
+        </div>
+        <div class="prod-card">
+          <div class="prod-img-wrap">
+            <img src="https://gabungansamuderainternasional.com/wp-content/uploads/2021/04/42.jpg" alt="Anchovies" loading="lazy">
+          </div>
+          <div class="prod-info">
+            <div class="prod-name">Anchovies</div>
+            <a href="index_v2.html#contact" class="prod-quote">Request Quote →</a>
+          </div>
+        </div>
+    </div>
+  </div>
+</main>
+
+<section class="catalog-cta">
+  <div class="container">
+    <h2>Ready to place an order?</h2>
+    <p>Request our full product catalog with specifications, minimum order quantities, and export pricing.</p>
+    <a href="index_v2.html#contact" class="btn-catalog">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 4h16v16H4z" stroke-linejoin="round"/><path d="M4 8l8 5 8-5"/></svg>
+      Request Product Catalog
+    </a>
+    <p style="margin-top:24px; font-size:14px; color:rgba(255,255,255,0.5); max-width:520px; margin-left:auto; margin-right:auto; line-height:1.7;">
+      Don't see a species you're looking for? Contact us anyway — we work with a wide network of fishermen and processors across the archipelago and will do our best to source it for you.
+    </p>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="footer-bottom">© 2025 Trader Sam Seafood. Jakarta, Indonesia.</div>
+  </div>
+</footer>
+
+<a href="https://wa.me/62XXXXXXXXXX" id="wa-float" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">
+  <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+</a>
+
+<script>
+document.querySelectorAll('.nav-dropdown > a').forEach(trigger => {
+  trigger.addEventListener('click', (e) => {
+    e.preventDefault();
+    const parent = trigger.parentElement;
+    const isOpen = parent.classList.contains('open');
+    document.querySelectorAll('.nav-dropdown').forEach(d => d.classList.remove('open'));
+    if (!isOpen) parent.classList.add('open');
+  });
+});
+document.addEventListener('click', (e) => {
+  if (!e.target.closest('.nav-dropdown')) {
+    document.querySelectorAll('.nav-dropdown').forEach(d => d.classList.remove('open'));
+  }
+});
+document.getElementById('hamburger').addEventListener('click', () => {
+  document.getElementById('hamburger').classList.toggle('open');
+});
+</script>
+</body>
+</html>
