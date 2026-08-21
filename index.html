@@ -382,20 +382,36 @@
     70% { transform: scale(2.2); opacity: 0; }
     100% { transform: scale(2.2); opacity: 0; }
   }
-  .map-legend { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px 20px; margin-top: 32px; }
+  .map-legend { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-top: 32px; }
   .map-legend-item {
-    display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600;
-    color: var(--text-muted); background: none; border: none; cursor: pointer; padding: 4px 0;
+    display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 700;
+    color: var(--navy); background: var(--white); border: 1.5px solid #e0e9f5; cursor: pointer;
+    padding: 9px 16px 9px 12px; border-radius: 30px; transition: var(--transition);
+    box-shadow: 0 2px 8px rgba(27,47,110,0.06);
   }
-  .map-legend-item:hover, .map-legend-item.active { color: var(--navy); }
-  .map-legend-dot { width: 9px; height: 9px; border-radius: 50%; background: var(--ocean); flex-shrink: 0; }
-  .map-legend-item.active .map-legend-dot { background: var(--navy); }
+  .map-legend-icon {
+    font-size: 17px; line-height: 1; width: 26px; height: 26px; border-radius: 50%;
+    background: var(--light-blue); display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; transition: var(--transition);
+  }
+  .map-legend-item:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(27,47,110,0.14); border-color: #cfe0f5; }
+  .map-legend-item.active {
+    background: var(--navy); color: var(--white); border-color: var(--navy);
+    box-shadow: 0 6px 18px rgba(27,47,110,0.28);
+  }
+  .map-legend-item.active .map-legend-icon { background: rgba(255,255,255,0.18); }
   .map-info {
-    background: var(--light-blue); border-radius: 20px; padding: 32px;
+    background: var(--light-blue); border-radius: 20px; padding: 40px 32px 32px;
     display: flex; flex-direction: column; align-items: center; gap: 14px;
-    margin: 24px auto 0; max-width: 640px; text-align: center;
+    margin: 28px auto 0; max-width: 640px; text-align: center; position: relative;
   }
-  .map-info-eyebrow { font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--ocean); }
+  .map-info-icon {
+    position: absolute; top: -26px; left: 50%; transform: translateX(-50%);
+    width: 52px; height: 52px; border-radius: 50%; background: var(--white);
+    display: flex; align-items: center; justify-content: center; font-size: 24px;
+    box-shadow: 0 6px 18px rgba(27,47,110,0.18); border: 3px solid var(--light-blue);
+  }
+  .map-info-eyebrow { font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--ocean); margin-top: 12px; }
   .map-info-title { font-size: 22px; font-weight: 800; color: var(--navy); line-height: 1.2; }
   .map-info-desc { font-size: 14px; color: var(--text-muted); line-height: 1.65; }
   .map-species-tags { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-top: 4px; }
@@ -1263,50 +1279,51 @@
     </div>
   </div>
   <div class="map-visual reveal" id="map-visual">
-    <img class="map-image" src="https://res.cloudinary.com/dytehjyns/image/upload/v1787305268/IMG_2230_wpfeob.jpg" alt="Map of Indonesia showing our seafood sourcing locations">
-    <button type="button" class="map-pin active" data-loc="natuna" style="top:16%; left:29%;" aria-label="Natuna Islands, Riau">
+    <img class="map-image" src="https://res.cloudinary.com/dytehjyns/image/upload/v1787305268/IMG_2230_wpfeob.jpg" alt="Map of Indonesia showing our seafood sourcing waters">
+    <button type="button" class="map-pin active" data-loc="natuna" style="top:10%; left:27%;" aria-label="South China Sea, near Natuna">
       <span class="map-pin-ring"></span><span class="map-pin-dot"></span>
-      <span class="map-pin-label">Natuna Islands</span>
+      <span class="map-pin-label">South China Sea</span>
     </button>
-    <button type="button" class="map-pin" data-loc="angke" style="top:66%; left:23%;" aria-label="Muara Angke, Jakarta">
+    <button type="button" class="map-pin" data-loc="angke" style="top:60%; left:25%;" aria-label="Java Sea, off Jakarta">
       <span class="map-pin-ring"></span><span class="map-pin-dot"></span>
-      <span class="map-pin-label">Muara Angke, Jakarta</span>
+      <span class="map-pin-label">Java Sea</span>
     </button>
-    <button type="button" class="map-pin" data-loc="banyuwangi" style="top:72%; left:40%;" aria-label="Banyuwangi, East Java">
+    <button type="button" class="map-pin" data-loc="banyuwangi" style="top:70%; left:42%;" aria-label="Bali Strait, between Java and Bali">
       <span class="map-pin-ring"></span><span class="map-pin-dot"></span>
-      <span class="map-pin-label">Banyuwangi</span>
+      <span class="map-pin-label">Bali Strait</span>
     </button>
-    <button type="button" class="map-pin" data-loc="bali" style="top:72%; left:45%;" aria-label="Bali">
+    <button type="button" class="map-pin" data-loc="bali" style="top:65%; left:47%;" aria-label="Bali Sea, north of Bali">
       <span class="map-pin-ring"></span><span class="map-pin-dot"></span>
-      <span class="map-pin-label">Bali</span>
+      <span class="map-pin-label">Bali Sea</span>
     </button>
-    <button type="button" class="map-pin" data-loc="makassar" style="top:59%; left:53%;" aria-label="Makassar, South Sulawesi">
+    <button type="button" class="map-pin" data-loc="makassar" style="top:55%; left:48%;" aria-label="Makassar Strait, between Kalimantan and Sulawesi">
       <span class="map-pin-ring"></span><span class="map-pin-dot"></span>
-      <span class="map-pin-label">Makassar</span>
+      <span class="map-pin-label">Makassar Strait</span>
     </button>
-    <button type="button" class="map-pin" data-loc="bitung" style="top:30%; left:64%;" aria-label="Bitung, North Sulawesi">
+    <button type="button" class="map-pin" data-loc="bitung" style="top:23%; left:64%;" aria-label="Sulawesi Sea, north of Sulawesi">
       <span class="map-pin-ring"></span><span class="map-pin-dot"></span>
-      <span class="map-pin-label">Bitung</span>
+      <span class="map-pin-label">Sulawesi Sea</span>
     </button>
-    <button type="button" class="map-pin" data-loc="ambon" style="top:53%; left:74%;" aria-label="Ambon, Maluku">
+    <button type="button" class="map-pin" data-loc="ambon" style="top:58%; left:77%;" aria-label="Banda Sea, near Ambon">
       <span class="map-pin-ring"></span><span class="map-pin-dot"></span>
-      <span class="map-pin-label">Ambon</span>
+      <span class="map-pin-label">Banda Sea</span>
     </button>
   </div>
   <div class="container">
     <div class="map-legend reveal" id="map-legend">
-      <button type="button" class="map-legend-item active" data-loc="natuna"><span class="map-legend-dot"></span>Natuna Islands</button>
-      <button type="button" class="map-legend-item" data-loc="angke"><span class="map-legend-dot"></span>Muara Angke, Jakarta</button>
-      <button type="button" class="map-legend-item" data-loc="banyuwangi"><span class="map-legend-dot"></span>Banyuwangi</button>
-      <button type="button" class="map-legend-item" data-loc="bali"><span class="map-legend-dot"></span>Bali</button>
-      <button type="button" class="map-legend-item" data-loc="makassar"><span class="map-legend-dot"></span>Makassar</button>
-      <button type="button" class="map-legend-item" data-loc="bitung"><span class="map-legend-dot"></span>Bitung</button>
-      <button type="button" class="map-legend-item" data-loc="ambon"><span class="map-legend-dot"></span>Ambon</button>
+      <button type="button" class="map-legend-item active" data-loc="natuna"><span class="map-legend-icon">🦑</span>South China Sea</button>
+      <button type="button" class="map-legend-item" data-loc="angke"><span class="map-legend-icon">🦐</span>Java Sea</button>
+      <button type="button" class="map-legend-item" data-loc="banyuwangi"><span class="map-legend-icon">🐟</span>Bali Strait</button>
+      <button type="button" class="map-legend-item" data-loc="bali"><span class="map-legend-icon">🎣</span>Bali Sea</button>
+      <button type="button" class="map-legend-item" data-loc="makassar"><span class="map-legend-icon">🐠</span>Makassar Strait</button>
+      <button type="button" class="map-legend-item" data-loc="bitung"><span class="map-legend-icon">🐡</span>Sulawesi Sea</button>
+      <button type="button" class="map-legend-item" data-loc="ambon"><span class="map-legend-icon">🐙</span>Banda Sea</button>
     </div>
     <div class="map-info reveal" id="map-info">
-      <span class="map-info-eyebrow">Riau Islands</span>
-      <div class="map-info-title">Natuna Islands</div>
-      <p class="map-info-desc">Remote waters at the edge of the South China Sea, known for exceptionally clean, deep-water catch.</p>
+      <span class="map-info-icon">🦑</span>
+      <span class="map-info-eyebrow">Near Natuna Islands</span>
+      <div class="map-info-title">South China Sea</div>
+      <p class="map-info-desc">Remote, exceptionally clean deep-water fishing grounds at Indonesia's northern edge.</p>
       <div class="map-species-tags">
         <span class="map-species-tag">Squid</span>
         <span class="map-species-tag">Cuttlefish</span>
@@ -1690,38 +1707,38 @@ document.querySelectorAll('.flip-card').forEach(card => {
 // ─── SOURCING MAP ───
 const sourcingLocations = {
   natuna: {
-    region: 'Riau Islands', name: 'Natuna Islands',
-    desc: 'Remote waters at the edge of the South China Sea, known for exceptionally clean, deep-water catch.',
+    region: 'Near Natuna Islands', name: 'South China Sea', icon: '🦑',
+    desc: 'Remote, exceptionally clean deep-water fishing grounds at Indonesia\'s northern edge.',
     species: ['Squid', 'Cuttlefish']
   },
   angke: {
-    region: 'Jakarta', name: 'Muara Angke',
-    desc: 'Our home port and export base — Jakarta\'s oldest working fishing harbor, and the heart of our cold chain.',
+    region: 'Off Jakarta, Java', name: 'Java Sea', icon: '🦐',
+    desc: 'Shallow, productive waters just off our home port at Muara Angke, where our cold chain begins.',
     species: ['Croaker', 'Dory Fish', 'Shrimp']
   },
   banyuwangi: {
-    region: 'East Java', name: 'Banyuwangi',
-    desc: 'A historic small-pelagic fishing hub on Java\'s eastern tip, facing the Bali Strait.',
+    region: 'Java–Bali Passage', name: 'Bali Strait', icon: '🐟',
+    desc: 'A narrow, current-rich channel between Java and Bali, thick with small pelagic schools.',
     species: ['Sardines', 'Anchovies']
   },
   bali: {
-    region: 'Bali', name: 'Bali',
-    desc: 'Deep waters just off Bali\'s coast yield some of our most sought-after pelagic species.',
+    region: 'North of Bali', name: 'Bali Sea', icon: '🎣',
+    desc: 'Deep, current-swept waters north of Bali produce some of our finest pelagic catch.',
     species: ['Mahi Mahi', 'Yellowfin Tuna']
   },
   makassar: {
-    region: 'South Sulawesi', name: 'Makassar',
-    desc: 'A major trading port at the crossroads of the archipelago, sourcing from the Flores and Makassar Straits.',
+    region: 'Kalimantan–Sulawesi Passage', name: 'Makassar Strait', icon: '🐠',
+    desc: 'A major fishing corridor linking the Flores and Sulawesi Seas at the archipelago\'s crossroads.',
     species: ['Coral Trout', 'Grouper']
   },
   bitung: {
-    region: 'North Sulawesi', name: 'Bitung',
-    desc: 'One of Indonesia\'s busiest tuna ports, sitting on the rich Sulawesi Sea and Bitung Strait.',
+    region: 'North of Sulawesi', name: 'Sulawesi Sea', icon: '🐡',
+    desc: 'Deep tropical waters north of Sulawesi — among Indonesia\'s richest tuna grounds.',
     species: ['Skipjack Tuna', 'Mackerel']
   },
   ambon: {
-    region: 'Maluku', name: 'Ambon',
-    desc: 'The heart of the historic Spice Islands, with reef-rich waters across the Banda Sea.',
+    region: 'Heart of the Spice Islands', name: 'Banda Sea', icon: '🐙',
+    desc: 'A deep, reef-fringed sea historic for its waters, teeming with snapper and reef species.',
     species: ['Snapper', 'Reef Fish']
   }
 };
@@ -1736,6 +1753,7 @@ function selectLocation(loc) {
   mapPins.forEach(p => p.classList.toggle('active', p.dataset.loc === loc));
   mapLegendItems.forEach(l => l.classList.toggle('active', l.dataset.loc === loc));
   mapInfo.innerHTML = `
+    <span class="map-info-icon">${data.icon}</span>
     <span class="map-info-eyebrow">${data.region}</span>
     <div class="map-info-title">${data.name}</div>
     <p class="map-info-desc">${data.desc}</p>
