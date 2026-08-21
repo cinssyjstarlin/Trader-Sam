@@ -20,7 +20,7 @@
     --transition: 0.3s ease;
   }
 
-  html { scroll-behavior: smooth; }
+  html { scroll-behavior: smooth; overflow-x: hidden; max-width: 100%; }
 
   body {
     font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
@@ -462,11 +462,13 @@
     .section { padding: 36px 0; }
     .nav-links, .nav-cta { display: none; }
     .hamburger { display: flex; }
-    .hero-inner { grid-template-columns: 1fr; gap: 40px; }
+    .hero-inner { grid-template-columns: 1fr; gap: 40px; min-width: 0; }
+    .hero-content, .hero-stats { min-width: 0; }
     .hero-stats { flex-direction: row; overflow-x: auto; gap: 16px; }
     .stat-card { flex: 0 0 180px; }
     .stat-number { font-size: 36px; }
     .why-grid, .sust-grid, .contact-grid { grid-template-columns: 1fr; gap: 40px; }
+    .hero-inner > *, .why-grid > *, .sust-grid > *, .contact-grid > * { min-width: 0; }
     .sust-image { order: -1; height: 280px; }
     .certs-grid { grid-template-columns: repeat(2, 1fr); }
     .gallery-grid { grid-template-columns: 1fr; }
@@ -475,6 +477,7 @@
     .scroll-btn { display: none; }
     .why-image { height: 300px; }
     .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 32px; }
+    .products-scroll-wrapper { margin: 0 16px; }
   }
 
   /* ─── COMMITMENT GRID ─── */
@@ -1456,7 +1459,7 @@ if (statsSection) statObserver.observe(statsSection);
 
 // ─── STEP CAROUSEL ───
 (function() {
-  const CARDS_VISIBLE = 3;
+  let CARDS_VISIBLE = 3;
   const GAP = 20;
   let currentIndex = 0;
   let cardWidth = 0;
@@ -1470,6 +1473,7 @@ if (statsSection) statObserver.observe(statsSection);
     if (!scroll || !inner) return;
     const cards = inner.querySelectorAll('.flip-card');
     totalCards = cards.length;
+    CARDS_VISIBLE = window.innerWidth <= 480 ? 1 : window.innerWidth <= 768 ? 2 : 3;
     const containerWidth = scroll.offsetWidth;
     cardWidth = Math.floor((containerWidth - (CARDS_VISIBLE - 1) * GAP) / CARDS_VISIBLE);
     cards.forEach(card => {
