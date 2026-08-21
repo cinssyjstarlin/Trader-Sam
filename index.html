@@ -285,6 +285,11 @@
 
   /* ─── SUPPLY CHAIN ─── */
   #supply { background: var(--light-blue); }
+  .quality-pillars-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px;
+    background: rgba(255,255,255,0.12); border-radius: 12px; overflow: hidden;
+  }
+  .commitment-cards-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
   .supply-timeline {
     display: grid; grid-template-columns: repeat(6, 1fr);
     gap: 16px; margin-top: 56px;
@@ -545,8 +550,10 @@
     .stat-card { padding: 14px 8px; text-align: center; }
     .stat-number { font-size: 24px; }
     .stat-label { font-size: 11.5px; line-height: 1.3; }
-    .why-grid, .sust-grid, .contact-grid { grid-template-columns: 1fr; gap: 40px; }
-    .hero-inner > *, .why-grid > *, .sust-grid > *, .contact-grid > * { min-width: 0; }
+    .why-grid, .sust-grid, .contact-grid, .quality-pillars-grid, .commitment-cards-grid { grid-template-columns: 1fr; gap: 40px; }
+    .hero-inner > *, .why-grid > *, .sust-grid > *, .contact-grid > *, .quality-pillars-grid > *, .commitment-cards-grid > * { min-width: 0; }
+    .quality-pillars-grid { gap: 1px; }
+    .commitment-cards-grid { gap: 16px; }
     .sust-image { order: -1; height: 280px; }
     .certs-grid { grid-template-columns: repeat(2, 1fr); }
     .gallery-grid { grid-template-columns: 1fr; }
@@ -1142,7 +1149,7 @@
         <div style="font-size:11px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:rgba(255,255,255,0.55); margin-bottom:8px;">Why Our Quality Stands Apart</div>
         <div style="font-size:clamp(22px,3vw,32px); font-weight:800; line-height:1.2;">Every shipment leaves with zero compromise.</div>
       </div>
-      <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:rgba(255,255,255,0.12); border-radius:12px; overflow:hidden;">
+      <div class="quality-pillars-grid">
         <div style="background:rgba(255,255,255,0.06); padding:32px 28px; text-align:center;">
           <div style="width:60px;height:60px;border-radius:50%;background:rgba(55,138,221,0.25);border:2px solid rgba(55,138,221,0.5);display:flex;align-items:center;justify-content:center;margin:0 auto 20px;">
             <i class="ph ph-seal-check" style="font-size:28px;color:#6ab8f7;"></i>
@@ -1203,7 +1210,7 @@
         <h2 class="section-title" style="margin-bottom:0;">Our Commitment</h2>
       </div>
     </div>
-    <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;" class="reveal">
+    <div class="commitment-cards-grid reveal">
       <div style="background:var(--white); border-radius:16px; padding:32px; display:flex; align-items:flex-start; gap:20px;">
         <div style="width:48px;height:48px;flex-shrink:0;border-radius:12px;background:var(--light-blue);display:flex;align-items:center;justify-content:center;">
           <i class="ph ph-currency-circle-dollar" style="font-size:24px;color:var(--navy);"></i>
@@ -1714,7 +1721,7 @@ const sourcingLocations = {
   angke: {
     region: 'Off Jakarta, Java', name: 'Java Sea', icon: '🦐',
     desc: 'Shallow, productive waters just off our home port at Muara Angke, where our cold chain begins.',
-    species: ['Croaker', 'Dory Fish', 'Shrimp']
+    species: ['Croaker', 'Dory Fish', 'Shrimp', 'Soft Shell Crab']
   },
   banyuwangi: {
     region: 'Java–Bali Passage', name: 'Bali Strait', icon: '🐟',
@@ -1724,22 +1731,22 @@ const sourcingLocations = {
   bali: {
     region: 'North of Bali', name: 'Bali Sea', icon: '🎣',
     desc: 'Deep, current-swept waters north of Bali produce some of our finest pelagic catch.',
-    species: ['Mahi Mahi', 'Yellowfin Tuna']
+    species: ['Mahi Mahi', 'Easter Little Tunas']
   },
   makassar: {
     region: 'Kalimantan–Sulawesi Passage', name: 'Makassar Strait', icon: '🐠',
     desc: 'A major fishing corridor linking the Flores and Sulawesi Seas at the archipelago\'s crossroads.',
-    species: ['Coral Trout', 'Grouper']
+    species: ['Leopard Coral Trout', 'Barred Cheek Coral Trout']
   },
   bitung: {
     region: 'North of Sulawesi', name: 'Sulawesi Sea', icon: '🐡',
     desc: 'Deep tropical waters north of Sulawesi — among Indonesia\'s richest tuna grounds.',
-    species: ['Skipjack Tuna', 'Mackerel']
+    species: ['Skipjack Tuna', 'Chub Mackerel']
   },
   ambon: {
     region: 'Heart of the Spice Islands', name: 'Banda Sea', icon: '🐙',
     desc: 'A deep, reef-fringed sea historic for its waters, teeming with snapper and reef species.',
-    species: ['Snapper', 'Reef Fish']
+    species: ['Red Snapper', 'Parrot Fish']
   }
 };
 
