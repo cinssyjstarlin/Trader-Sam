@@ -326,7 +326,11 @@
   .carousel-btn:hover { background: var(--navy); color: var(--white); border-color: var(--navy); }
   .carousel-btn-left { left: -60px; }
   .carousel-btn-right { right: -60px; }
-  @media (max-width: 768px) { .carousel-btn { display: none; } }
+  @media (max-width: 768px) {
+    .carousel-btn { width: 38px; height: 38px; font-size: 17px; background: rgba(255,255,255,0.92); }
+    .carousel-btn-left { left: 4px; }
+    .carousel-btn-right { right: 4px; }
+  }
 
   /* ─── CERTIFICATIONS ─── */
   #certs { background: var(--white); }
@@ -1633,6 +1637,15 @@ if (statsSection) statObserver.observe(statsSection);
     }
   }
 
+  function prevCard() {
+    const maxIndex = totalCards - CARDS_VISIBLE;
+    if (currentIndex <= 0) {
+      goToCard(maxIndex, true);
+    } else {
+      goToCard(currentIndex - 1, true);
+    }
+  }
+
   // Pause on hover
   const scrollEl = document.getElementById('products-scroll');
   if (scrollEl) {
@@ -1640,17 +1653,30 @@ if (statsSection) statObserver.observe(statsSection);
     scrollEl.addEventListener('mouseleave', () => { paused = false; });
   }
 
+  // Swipe support (touch)
+  if (scrollEl) {
+    let touchStartX = 0;
+    let touchDeltaX = 0;
+    scrollEl.addEventListener('touchstart', (e) => {
+      touchStartX = e.touches[0].clientX;
+      touchDeltaX = 0;
+      paused = true;
+    }, { passive: true });
+    scrollEl.addEventListener('touchmove', (e) => {
+      touchDeltaX = e.touches[0].clientX - touchStartX;
+    }, { passive: true });
+    scrollEl.addEventListener('touchend', () => {
+      const SWIPE_THRESHOLD = 40;
+      paused = false;
+      if (touchDeltaX <= -SWIPE_THRESHOLD) nextCard();
+      else if (touchDeltaX >= SWIPE_THRESHOLD) prevCard();
+    });
+  }
+
   // Arrow buttons
   const prevBtn = document.getElementById('carousel-prev');
   const nextBtn = document.getElementById('carousel-next');
-  if (prevBtn) prevBtn.addEventListener('click', () => {
-    const maxIndex = totalCards - CARDS_VISIBLE;
-    if (currentIndex <= 0) {
-      goToCard(maxIndex, true);
-    } else {
-      goToCard(currentIndex - 1, true);
-    }
-  });
+  if (prevBtn) prevBtn.addEventListener('click', () => { prevCard(); });
   if (nextBtn) nextBtn.addEventListener('click', () => { nextCard(); });
 
   carouselTimer = setInterval(nextCard, 4000);
