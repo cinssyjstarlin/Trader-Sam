@@ -348,19 +348,11 @@
   .cert-name, .cert-desc { display: none; }
 
   /* ─── SOURCING MAP ─── */
-  #sourcing { background: var(--white); overflow: hidden; }
-  .map-wrap {
-    display: grid; grid-template-columns: 1.3fr 1fr; gap: 40px;
-    align-items: stretch; margin-top: 48px;
-  }
+  #sourcing { background: var(--white); }
   .map-visual {
-    position: relative; width: 100%; aspect-ratio: 2.2 / 1;
-    background: linear-gradient(160deg, var(--light-blue) 0%, #d7ecff 100%);
-    border-radius: 20px; overflow: hidden; border: 1.5px solid #d7e6f5;
+    position: relative; width: 100%; margin-top: 40px; background: var(--light-blue);
   }
-  .map-islands { position: absolute; inset: 0; width: 100%; height: 100%; }
-  .map-island { fill: var(--navy); opacity: 0.13; }
-  .map-route { fill: none; stroke: var(--ocean); stroke-width: 1.5; stroke-dasharray: 5 6; opacity: 0.35; }
+  .map-image { display: block; width: 100%; height: auto; }
   .map-pin {
     position: absolute; transform: translate(-50%, -50%);
     width: 34px; height: 34px; padding: 0; border: none; background: none; cursor: pointer;
@@ -390,19 +382,7 @@
     70% { transform: scale(2.2); opacity: 0; }
     100% { transform: scale(2.2); opacity: 0; }
   }
-  .map-info {
-    background: var(--light-blue); border-radius: 20px; padding: 32px;
-    display: flex; flex-direction: column; justify-content: center; gap: 14px;
-  }
-  .map-info-eyebrow { font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--ocean); }
-  .map-info-title { font-size: 22px; font-weight: 800; color: var(--navy); line-height: 1.2; }
-  .map-info-desc { font-size: 14px; color: var(--text-muted); line-height: 1.65; }
-  .map-species-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 4px; }
-  .map-species-tag {
-    font-size: 12px; font-weight: 700; color: #185FA5; background: var(--white);
-    padding: 6px 12px; border-radius: 20px; border: 1px solid #cfe3f7;
-  }
-  .map-legend { display: flex; flex-wrap: wrap; gap: 8px 16px; margin-top: 28px; }
+  .map-legend { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px 20px; margin-top: 32px; }
   .map-legend-item {
     display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600;
     color: var(--text-muted); background: none; border: none; cursor: pointer; padding: 4px 0;
@@ -410,6 +390,19 @@
   .map-legend-item:hover, .map-legend-item.active { color: var(--navy); }
   .map-legend-dot { width: 9px; height: 9px; border-radius: 50%; background: var(--ocean); flex-shrink: 0; }
   .map-legend-item.active .map-legend-dot { background: var(--navy); }
+  .map-info {
+    background: var(--light-blue); border-radius: 20px; padding: 32px;
+    display: flex; flex-direction: column; align-items: center; gap: 14px;
+    margin: 24px auto 0; max-width: 640px; text-align: center;
+  }
+  .map-info-eyebrow { font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--ocean); }
+  .map-info-title { font-size: 22px; font-weight: 800; color: var(--navy); line-height: 1.2; }
+  .map-info-desc { font-size: 14px; color: var(--text-muted); line-height: 1.65; }
+  .map-species-tags { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-top: 4px; }
+  .map-species-tag {
+    font-size: 12px; font-weight: 700; color: #185FA5; background: var(--white);
+    padding: 6px 12px; border-radius: 20px; border: 1px solid #cfe3f7;
+  }
 
   /* ─── SUSTAINABILITY ─── */
   #sustainability { background: var(--white); }
@@ -536,9 +529,8 @@
     .stat-card { padding: 14px 8px; text-align: center; }
     .stat-number { font-size: 24px; }
     .stat-label { font-size: 11.5px; line-height: 1.3; }
-    .why-grid, .sust-grid, .contact-grid, .map-wrap { grid-template-columns: 1fr; gap: 40px; }
-    .hero-inner > *, .why-grid > *, .sust-grid > *, .contact-grid > *, .map-wrap > * { min-width: 0; }
-    .map-visual { aspect-ratio: 1.5 / 1; }
+    .why-grid, .sust-grid, .contact-grid { grid-template-columns: 1fr; gap: 40px; }
+    .hero-inner > *, .why-grid > *, .sust-grid > *, .contact-grid > * { min-width: 0; }
     .sust-image { order: -1; height: 280px; }
     .certs-grid { grid-template-columns: repeat(2, 1fr); }
     .gallery-grid { grid-template-columns: 1fr; }
@@ -1186,68 +1178,6 @@
   </div>
 </section>
 
-<!-- ─── SOURCING MAP ─── -->
-<section id="sourcing" class="section">
-  <div class="container">
-    <div class="reveal" style="text-align:center; max-width:600px; margin:0 auto 0;">
-      <p class="section-eyebrow">Where We Source</p>
-      <h2 class="section-title">Sourced Across the Archipelago</h2>
-      <p class="section-sub" style="margin:0 auto;">Tap a pin to see what we bring in from that corner of Indonesia's waters.</p>
-    </div>
-    <div class="map-wrap reveal">
-      <div class="map-visual" id="map-visual">
-        <svg class="map-islands" viewBox="0 0 1000 400" preserveAspectRatio="none" aria-hidden="true">
-          <path class="map-island" d="M100,40 C160,20 200,80 190,140 C180,200 140,260 90,250 C50,240 40,180 55,120 C65,80 70,55 100,40 Z"/>
-          <path class="map-island" d="M190,255 C260,240 340,270 420,255 C450,250 460,270 430,280 C350,300 260,290 195,280 C175,275 175,262 190,255 Z"/>
-          <path class="map-island" d="M420,70 C480,50 560,60 590,110 C610,150 600,200 560,225 C510,255 440,240 410,195 C385,155 390,100 420,70 Z"/>
-          <path class="map-island" d="M560,110 C590,90 620,95 630,120 C640,90 670,85 680,115 C690,150 670,170 650,180 C665,210 650,240 620,235 C610,260 580,255 575,230 C550,240 530,215 545,190 C520,180 520,150 545,140 C535,115 545,100 560,110 Z"/>
-          <ellipse class="map-island" cx="720" cy="165" rx="20" ry="16"/>
-          <ellipse class="map-island" cx="762" cy="202" rx="16" ry="13"/>
-          <ellipse class="map-island" cx="795" cy="172" rx="13" ry="11"/>
-          <path class="map-island" d="M830,110 C880,90 950,100 970,150 C985,190 970,240 930,265 C880,295 830,270 815,220 C805,180 810,140 830,110 Z"/>
-        </svg>
-        <button type="button" class="map-pin active" data-loc="natuna" style="top:10%; left:15%;" aria-label="Natuna Islands, Riau">
-          <span class="map-pin-ring"></span><span class="map-pin-dot"></span>
-          <span class="map-pin-label">Natuna Islands</span>
-        </button>
-        <button type="button" class="map-pin" data-loc="angke" style="top:57.5%; left:23%;" aria-label="Muara Angke, Jakarta">
-          <span class="map-pin-ring"></span><span class="map-pin-dot"></span>
-          <span class="map-pin-label">Muara Angke, Jakarta</span>
-        </button>
-        <button type="button" class="map-pin" data-loc="banyuwangi" style="top:65%; left:34%;" aria-label="Banyuwangi, East Java">
-          <span class="map-pin-ring"></span><span class="map-pin-dot"></span>
-          <span class="map-pin-label">Banyuwangi</span>
-        </button>
-        <button type="button" class="map-pin" data-loc="bali" style="top:62.5%; left:40%;" aria-label="Bali">
-          <span class="map-pin-ring"></span><span class="map-pin-dot"></span>
-          <span class="map-pin-label">Bali</span>
-        </button>
-        <button type="button" class="map-pin" data-loc="makassar" style="top:47.5%; left:56%;" aria-label="Makassar, South Sulawesi">
-          <span class="map-pin-ring"></span><span class="map-pin-dot"></span>
-          <span class="map-pin-label">Makassar</span>
-        </button>
-        <button type="button" class="map-pin" data-loc="bitung" style="top:22.5%; left:59%;" aria-label="Bitung, North Sulawesi">
-          <span class="map-pin-ring"></span><span class="map-pin-dot"></span>
-          <span class="map-pin-label">Bitung</span>
-        </button>
-        <button type="button" class="map-pin" data-loc="ambon" style="top:52.5%; left:76%;" aria-label="Ambon, Maluku">
-          <span class="map-pin-ring"></span><span class="map-pin-dot"></span>
-          <span class="map-pin-label">Ambon</span>
-        </button>
-      </div>
-      <div class="map-info" id="map-info">
-        <span class="map-info-eyebrow">Riau Islands</span>
-        <div class="map-info-title">Natuna Islands</div>
-        <p class="map-info-desc">Remote waters at the edge of the South China Sea, known for exceptionally clean, deep-water catch.</p>
-        <div class="map-species-tags">
-          <span class="map-species-tag">Squid</span>
-          <span class="map-species-tag">Cuttlefish</span>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
 <!-- ─── SUSTAINABILITY ─── -->
 <section id="sustainability" class="section" style="background:var(--light-blue);">
   <div class="container">
@@ -1320,6 +1250,68 @@
       </div>
     </div>
     <p class="stats-para reveal">For over a decade, Trader Sam Seafood has supplied premium Indonesian seafood to customers worldwide, combining local sourcing expertise with reliable export operations and rigorous quality assurance.</p>
+  </div>
+</section>
+
+<!-- ─── SOURCING MAP ─── -->
+<section id="sourcing" class="section">
+  <div class="container">
+    <div class="reveal" style="text-align:center; max-width:600px; margin:0 auto 0;">
+      <p class="section-eyebrow">Where We Source</p>
+      <h2 class="section-title">Sourced Across the Archipelago</h2>
+      <p class="section-sub" style="margin:0 auto;">Tap a pin to see what we bring in from that corner of Indonesia's waters.</p>
+    </div>
+  </div>
+  <div class="map-visual reveal" id="map-visual">
+    <img class="map-image" src="https://res.cloudinary.com/dytehjyns/image/upload/v1787305268/IMG_2230_wpfeob.jpg" alt="Map of Indonesia showing our seafood sourcing locations">
+    <button type="button" class="map-pin active" data-loc="natuna" style="top:16%; left:29%;" aria-label="Natuna Islands, Riau">
+      <span class="map-pin-ring"></span><span class="map-pin-dot"></span>
+      <span class="map-pin-label">Natuna Islands</span>
+    </button>
+    <button type="button" class="map-pin" data-loc="angke" style="top:66%; left:23%;" aria-label="Muara Angke, Jakarta">
+      <span class="map-pin-ring"></span><span class="map-pin-dot"></span>
+      <span class="map-pin-label">Muara Angke, Jakarta</span>
+    </button>
+    <button type="button" class="map-pin" data-loc="banyuwangi" style="top:72%; left:40%;" aria-label="Banyuwangi, East Java">
+      <span class="map-pin-ring"></span><span class="map-pin-dot"></span>
+      <span class="map-pin-label">Banyuwangi</span>
+    </button>
+    <button type="button" class="map-pin" data-loc="bali" style="top:72%; left:45%;" aria-label="Bali">
+      <span class="map-pin-ring"></span><span class="map-pin-dot"></span>
+      <span class="map-pin-label">Bali</span>
+    </button>
+    <button type="button" class="map-pin" data-loc="makassar" style="top:59%; left:53%;" aria-label="Makassar, South Sulawesi">
+      <span class="map-pin-ring"></span><span class="map-pin-dot"></span>
+      <span class="map-pin-label">Makassar</span>
+    </button>
+    <button type="button" class="map-pin" data-loc="bitung" style="top:30%; left:64%;" aria-label="Bitung, North Sulawesi">
+      <span class="map-pin-ring"></span><span class="map-pin-dot"></span>
+      <span class="map-pin-label">Bitung</span>
+    </button>
+    <button type="button" class="map-pin" data-loc="ambon" style="top:53%; left:74%;" aria-label="Ambon, Maluku">
+      <span class="map-pin-ring"></span><span class="map-pin-dot"></span>
+      <span class="map-pin-label">Ambon</span>
+    </button>
+  </div>
+  <div class="container">
+    <div class="map-legend reveal" id="map-legend">
+      <button type="button" class="map-legend-item active" data-loc="natuna"><span class="map-legend-dot"></span>Natuna Islands</button>
+      <button type="button" class="map-legend-item" data-loc="angke"><span class="map-legend-dot"></span>Muara Angke, Jakarta</button>
+      <button type="button" class="map-legend-item" data-loc="banyuwangi"><span class="map-legend-dot"></span>Banyuwangi</button>
+      <button type="button" class="map-legend-item" data-loc="bali"><span class="map-legend-dot"></span>Bali</button>
+      <button type="button" class="map-legend-item" data-loc="makassar"><span class="map-legend-dot"></span>Makassar</button>
+      <button type="button" class="map-legend-item" data-loc="bitung"><span class="map-legend-dot"></span>Bitung</button>
+      <button type="button" class="map-legend-item" data-loc="ambon"><span class="map-legend-dot"></span>Ambon</button>
+    </div>
+    <div class="map-info reveal" id="map-info">
+      <span class="map-info-eyebrow">Riau Islands</span>
+      <div class="map-info-title">Natuna Islands</div>
+      <p class="map-info-desc">Remote waters at the edge of the South China Sea, known for exceptionally clean, deep-water catch.</p>
+      <div class="map-species-tags">
+        <span class="map-species-tag">Squid</span>
+        <span class="map-species-tag">Cuttlefish</span>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -1735,11 +1727,14 @@ const sourcingLocations = {
 };
 
 const mapPins = document.querySelectorAll('.map-pin');
+const mapLegendItems = document.querySelectorAll('.map-legend-item');
 const mapInfo = document.getElementById('map-info');
 
-function renderMapInfo(loc) {
+function selectLocation(loc) {
   const data = sourcingLocations[loc];
   if (!data || !mapInfo) return;
+  mapPins.forEach(p => p.classList.toggle('active', p.dataset.loc === loc));
+  mapLegendItems.forEach(l => l.classList.toggle('active', l.dataset.loc === loc));
   mapInfo.innerHTML = `
     <span class="map-info-eyebrow">${data.region}</span>
     <div class="map-info-title">${data.name}</div>
@@ -1751,11 +1746,10 @@ function renderMapInfo(loc) {
 }
 
 mapPins.forEach(pin => {
-  pin.addEventListener('click', () => {
-    mapPins.forEach(p => p.classList.remove('active'));
-    pin.classList.add('active');
-    renderMapInfo(pin.dataset.loc);
-  });
+  pin.addEventListener('click', () => selectLocation(pin.dataset.loc));
+});
+mapLegendItems.forEach(item => {
+  item.addEventListener('click', () => selectLocation(item.dataset.loc));
 });
 
 // ─── NEWS ───
